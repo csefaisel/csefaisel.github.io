@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤗 Happy Hug Day 🤗</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        ::selection{background:rgba(220,140,80,.3);color:#fff;}
+
+        body{
+            min-height:100vh;
+            background:linear-gradient(135deg,#14100c 0%,#1e1510 25%,#1a120e 50%,#110d0a 100%);
+            font-family:'Lora',serif;overflow-x:hidden;color:#f5ede4;
+        }
+
+        /* LOADER */
+        .page-loader{
+            position:fixed;top:0;left:0;width:100%;height:100%;
+            background:#14100c;z-index:9999;
+            display:flex;align-items:center;justify-content:center;flex-direction:column;
+            transition:opacity .8s,visibility .8s;
+        }
+        .page-loader.hidden{opacity:0;visibility:hidden;}
+        .loader-icon{font-size:4rem;animation:pulse 1s ease-in-out infinite;}
+        @keyframes pulse{0%,100%{transform:scale(1);opacity:.7;}50%{transform:scale(1.2);opacity:1;}}
+        .loader-text{font-family:'Great Vibes',cursive;font-size:1.5rem;color:#d4a070;margin-top:1rem;}
+
+        /* BG */
+        .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+        .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur) ease-in-out infinite;opacity:0;}
+        @keyframes twinkle{0%,100%{opacity:0;}50%{opacity:var(--op);}}
+
+        .particle-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;}
+        .float-item{
+            position:absolute;top:105%;opacity:0;font-size:var(--sz);
+            animation:floatUp var(--dur) var(--del) ease-in infinite;
+        }
+        @keyframes floatUp{
+            0%{opacity:0;transform:translateY(0) rotate(0) scale(.5);}
+            10%{opacity:.7;transform:translateY(-10vh) rotate(10deg) scale(1);}
+            90%{opacity:.3;}
+            100%{opacity:0;transform:translateY(-115vh) rotate(var(--rot)) translateX(var(--drift)) scale(.3);}
+        }
+
+        .orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.1;z-index:0;animation:orbF 14s ease-in-out infinite;}
+        .orb-1{width:400px;height:400px;background:radial-gradient(circle,#d48040,transparent);top:8%;left:5%;}
+        .orb-2{width:350px;height:350px;background:radial-gradient(circle,#e8a060,transparent);top:50%;right:5%;animation-delay:-5s;}
+        .orb-3{width:300px;height:300px;background:radial-gradient(circle,#c07040,transparent);bottom:10%;left:35%;animation-delay:-9s;}
+        @keyframes orbF{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-20px) scale(1.1);}66%{transform:translate(-20px,20px) scale(.9);}}
+
+        .content{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;}
+
+        /* HERO */
+        .hero{
+            min-height:100vh;display:flex;flex-direction:column;align-items:center;
+            justify-content:center;text-align:center;padding:2rem;position:relative;
+        }
+        .hero-icon{font-size:5rem;margin-bottom:1.5rem;animation:floatI 4s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(220,140,80,.4));}
+        @keyframes floatI{0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);}}
+
+        .hero-sub{
+            font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:8px;
+            text-transform:uppercase;color:#d4a070;margin-bottom:.5rem;
+            opacity:0;animation:fadeUp 1s .3s ease forwards;
+        }
+        .hero-title{
+            font-family:'Great Vibes',cursive;font-size:clamp(3.5rem,10vw,8rem);
+            background:linear-gradient(135deg,#f0c8a0,#c07040,#f0c8a0,#f8e0c0);
+            background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;animation:fadeUp 1s .6s ease forwards,shimmer 4s ease-in-out infinite;
+            opacity:0;line-height:1.2;margin-bottom:1rem;
+        }
+        .hero-date{
+            font-family:'Playfair Display',serif;font-size:1.2rem;letter-spacing:12px;
+            color:#a07850;margin-bottom:2rem;opacity:0;animation:fadeUp 1s .9s ease forwards;
+        }
+        @keyframes shimmer{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+        .divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,#d4a070,transparent);margin:1rem auto;opacity:0;animation:fadeUp 1s 1.2s ease forwards;}
+        .hero-msg{
+            font-style:italic;font-size:1.15rem;max-width:620px;line-height:1.9;
+            color:#e0ccb8;opacity:0;animation:fadeUp 1s 1.5s ease forwards;margin-top:1rem;
+        }
+        .scroll-hint{position:absolute;bottom:2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeUp 1s 2s ease forwards;}
+        .scroll-hint span{font-size:.75rem;letter-spacing:4px;text-transform:uppercase;color:#8a6a50;}
+        .scroll-arrow{width:20px;height:20px;border-right:1px solid #8a6a50;border-bottom:1px solid #8a6a50;transform:rotate(45deg);animation:bounce 2s ease-in-out infinite;}
+        @keyframes bounce{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.5;}50%{transform:rotate(45deg) translate(5px,5px);opacity:1;}}
+
+        /* SECTION */
+        .section{padding:5rem 2rem;width:100%;max-width:1100px;margin:0 auto;}
+        .section-title{
+            font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,6vw,4rem);
+            text-align:center;background:linear-gradient(135deg,#f0c8a0,#c07040);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;margin-bottom:1rem;
+        }
+        .section-sub{color:#8a6a50;font-style:italic;text-align:center;margin-bottom:2.5rem;}
+
+        /* ===== HUG EMBRACE ===== */
+        .embrace-section{text-align:center;padding:5rem 2rem;}
+
+        .embrace-container{
+            position:relative;width:320px;height:380px;margin:2rem auto;cursor:pointer;
+        }
+
+        .embrace-svg{width:100%;height:100%;overflow:visible;}
+
+        /* Two figures approach & hug */
+        .figure-left{
+            transition:transform 1.2s cubic-bezier(.34,1.56,.64,1);
+            transform:translateX(-30px);
+        }
+        .figure-right{
+            transition:transform 1.2s cubic-bezier(.34,1.56,.64,1);
+            transform:translateX(30px);
+        }
+        .embrace-container.hugging .figure-left{transform:translateX(0);}
+        .embrace-container.hugging .figure-right{transform:translateX(0);}
+
+        /* Arms wrap around */
+        .arm-wrap-l{
+            opacity:0;transition:all 1s ease 1s;
+            transform-origin:right center;transform:rotate(-20deg);
+        }
+        .arm-wrap-r{
+            opacity:0;transition:all 1s ease 1.2s;
+            transform-origin:left center;transform:rotate(20deg);
+        }
+        .embrace-container.hugging .arm-wrap-l{opacity:1;transform:rotate(0);}
+        .embrace-container.hugging .arm-wrap-r{opacity:1;transform:rotate(0);}
+
+        /* Warmth glow between them */
+        .warmth-glow{
+            opacity:0;transition:opacity 1s ease 1.5s;
+        }
+        .embrace-container.hugging .warmth-glow{
+            opacity:1;animation:warmPulse 2s ease-in-out infinite 2s;
+        }
+        @keyframes warmPulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:.7;transform:scale(1.05);}}
+
+        /* Sparkle ring */
+        .hug-sparkle{
+            opacity:0;transition:opacity .8s ease 1.8s;
+        }
+        .embrace-container.hugging .hug-sparkle{opacity:1;}
+
+        .embrace-label{
+            font-family:'Playfair Display',serif;font-size:.85rem;letter-spacing:4px;
+            text-transform:uppercase;color:#8a6a50;margin-top:1rem;
+        }
+        .embrace-msg{
+            margin-top:1.5rem;font-family:'Great Vibes',cursive;font-size:2.2rem;
+            background:linear-gradient(135deg,#f0c8a0,#c07040);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            opacity:0;transform:translateY(20px);transition:all 1s ease 2.2s;
+        }
+        .embrace-container.hugging ~ .embrace-msg{opacity:1;transform:translateY(0);}
+
+        /* Floating hearts on hug */
+        .embrace-hearts{
+            position:absolute;top:10%;left:50%;transform:translateX(-50%);
+            pointer-events:none;
+        }
+        .e-heart{
+            position:absolute;font-size:1.2rem;opacity:0;
+            animation:eHeartUp 2s ease-out forwards;
+        }
+        @keyframes eHeartUp{
+            0%{opacity:0;transform:translate(0,0) scale(0);}
+            15%{opacity:1;transform:translate(var(--hx),calc(var(--hy) * .3)) scale(1);}
+            100%{opacity:0;transform:translate(calc(var(--hx)*1.5),var(--hy)) scale(.3);}
+        }
+
+        /* ===== WARMTH METER ===== */
+        .meter-section{text-align:center;padding:5rem 2rem;}
+
+        .meter-container{
+            position:relative;width:120px;height:340px;margin:2rem auto;
+        }
+
+        /* Thermometer */
+        .thermo-outer{
+            position:absolute;top:0;left:50%;transform:translateX(-50%);
+            width:50px;height:280px;
+            background:linear-gradient(180deg,rgba(40,25,18,.8),rgba(25,15,10,.9));
+            border-radius:25px 25px 0 0;border:2px solid rgba(220,140,80,.15);
+            overflow:hidden;
+        }
+        .thermo-fill{
+            position:absolute;bottom:0;left:4px;right:4px;height:15%;
+            background:linear-gradient(0deg,#e05030,#e87040,#f0a060);
+            border-radius:20px 20px 0 0;
+            transition:height 1s cubic-bezier(.34,1.56,.64,1);
+            box-shadow:0 0 15px rgba(224,80,48,.4),0 -5px 20px rgba(240,160,96,.2);
+        }
+        /* Marks */
+        .thermo-marks{
+            position:absolute;top:15px;right:-30px;display:flex;
+            flex-direction:column;justify-content:space-between;height:250px;
+        }
+        .t-mark{
+            font-family:'Playfair Display',serif;font-size:.55rem;
+            color:#8a6a50;letter-spacing:1px;text-align:left;
+        }
+
+        /* Bulb */
+        .thermo-bulb{
+            position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+            width:70px;height:70px;border-radius:50%;
+            background:radial-gradient(circle at 40% 40%,#f0a060,#e05030,#c03020);
+            border:2px solid rgba(220,140,80,.2);
+            box-shadow:0 0 20px rgba(224,80,48,.3);
+            transition:box-shadow 1s ease;
+        }
+
+        /* Heart inside bulb */
+        .bulb-heart{
+            position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+            font-size:1.5rem;animation:hbSmall 1.5s ease-in-out infinite;
+        }
+        @keyframes hbSmall{0%,100%{transform:translate(-50%,-50%) scale(1);}30%{transform:translate(-50%,-50%) scale(1.2);}60%{transform:translate(-50%,-50%) scale(1);}}
+
+        /* Glow levels */
+        .meter-container[data-level="high"] .thermo-bulb{box-shadow:0 0 40px rgba(224,80,48,.6),0 0 80px rgba(240,160,96,.3);}
+        .meter-container[data-level="max"] .thermo-bulb{box-shadow:0 0 60px rgba(224,80,48,.8),0 0 100px rgba(240,160,96,.4);animation:maxGlow 1s ease-in-out infinite;}
+        @keyframes maxGlow{0%,100%{box-shadow:0 0 60px rgba(224,80,48,.8),0 0 100px rgba(240,160,96,.4);}50%{box-shadow:0 0 80px rgba(224,80,48,1),0 0 120px rgba(240,160,96,.6);}}
+
+        .meter-btn{
+            background:linear-gradient(135deg,#d48040,#b06030);color:#fff;border:none;
+            padding:1rem 2.5rem;border-radius:50px;font-family:'Playfair Display',serif;
+            font-size:1rem;cursor:pointer;transition:all .3s ease;letter-spacing:3px;
+            margin-top:1.5rem;
+        }
+        .meter-btn:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(212,128,64,.4);}
+
+        .meter-label{
+            margin-top:1rem;font-family:'Playfair Display',serif;
+            font-size:1rem;color:#d4a070;min-height:1.5em;
+            transition:all .3s ease;
+        }
+        .meter-msg{
+            margin-top:1rem;font-family:'Great Vibes',cursive;font-size:2rem;
+            background:linear-gradient(135deg,#f0c8a0,#e05030);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            opacity:0;transform:translateY(10px);transition:all 1s ease;
+        }
+        .meter-msg.show{opacity:1;transform:translateY(0);}
+
+        /* ===== TYPES OF HUGS ===== */
+        .hug-types-section{padding:5rem 2rem;text-align:center;}
+
+        .hug-carousel{
+            display:flex;gap:2rem;overflow-x:auto;scroll-snap-type:x mandatory;
+            padding:1rem 2rem 2rem;max-width:100%;
+            scrollbar-width:thin;scrollbar-color:rgba(220,140,80,.2) transparent;
+        }
+        .hug-carousel::-webkit-scrollbar{height:6px;}
+        .hug-carousel::-webkit-scrollbar-track{background:transparent;}
+        .hug-carousel::-webkit-scrollbar-thumb{background:rgba(220,140,80,.2);border-radius:3px;}
+
+        .hug-type-card{
+            min-width:260px;max-width:260px;scroll-snap-align:center;
+            background:linear-gradient(145deg,rgba(50,30,18,.6),rgba(20,12,8,.8));
+            border:1px solid rgba(220,140,80,.1);border-radius:20px;
+            padding:2rem 1.5rem;text-align:center;transition:all .4s ease;
+            flex-shrink:0;position:relative;overflow:hidden;
+        }
+        .hug-type-card:hover{transform:translateY(-8px);border-color:rgba(220,140,80,.3);box-shadow:0 15px 40px rgba(100,60,20,.15);}
+        .hug-type-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(220,140,80,.04),transparent);transition:left .6s ease;}
+        .hug-type-card:hover::before{left:100%;}
+
+        .htc-icon{font-size:3rem;margin-bottom:.8rem;}
+        .htc-title{font-family:'Playfair Display',serif;font-size:1.15rem;color:#f0c8a0;margin-bottom:.6rem;font-weight:700;}
+        .htc-desc{font-style:italic;color:#a08868;line-height:1.7;font-size:.85rem;}
+
+        /* ===== HUG SCENE ===== */
+        .scene-section{padding:5rem 2rem;text-align:center;overflow:hidden;}
+        .scene-stage{
+            position:relative;width:100%;max-width:850px;height:520px;
+            margin:2rem auto;border-radius:24px;overflow:hidden;
+            background:linear-gradient(180deg,#14100c 0%,#1e1510 50%,#18120e 100%);
+            border:1px solid rgba(220,140,80,.1);cursor:pointer;
+        }
+
+        /* Autumn park bg */
+        .park-sky{position:absolute;top:0;left:0;right:0;bottom:130px;background:linear-gradient(180deg,#1a1510,#221a14);}
+        .sunset-glow{
+            position:absolute;bottom:130px;left:0;right:0;height:80px;
+            background:linear-gradient(to top,rgba(200,100,40,.08),transparent);
+        }
+
+        .park-ground{
+            position:absolute;bottom:0;left:0;right:0;height:130px;
+            background:linear-gradient(to top,#121008,#161210);
+        }
+
+        /* Autumn path */
+        .park-path{
+            position:absolute;bottom:0;left:25%;right:25%;height:130px;
+            background:linear-gradient(180deg,rgba(80,60,40,.1),rgba(60,45,30,.15));
+            border-radius:50% 50% 0 0;
+        }
+
+        /* Falling leaves */
+        .leaf-container{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;}
+        .falling-leaf{
+            position:absolute;top:-20px;font-size:var(--lsz);
+            animation:leafFall var(--ldur) var(--ldel) ease-in-out infinite;
+            opacity:0;
+        }
+        @keyframes leafFall{
+            0%{opacity:0;transform:translateY(-20px) rotate(0) translateX(0);}
+            10%{opacity:.7;}
+            90%{opacity:.4;}
+            100%{opacity:0;transform:translateY(520px) rotate(var(--lrot)) translateX(var(--ldrift));}
+        }
+
+        /* Lamp post */
+        .lamp-post{
+            position:absolute;bottom:128px;left:15%;width:6px;height:130px;
+            background:linear-gradient(180deg,#2a2018,#1a1410);z-index:2;
+        }
+        .lamp-top{
+            position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+            width:22px;height:22px;border-radius:50% 50% 0 0;
+            background:linear-gradient(180deg,#3a2a1a,#2a1a10);
+        }
+        .lamp-light{
+            position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+            width:14px;height:14px;border-radius:50%;
+            background:radial-gradient(circle,#f0c870,#d4a040);
+            box-shadow:0 0 20px rgba(240,200,100,.4),0 0 50px rgba(220,160,60,.15);
+        }
+        .lamp-glow-area{
+            position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+            width:160px;height:200px;
+            background:radial-gradient(ellipse at 50% 0%,rgba(240,200,100,.06),transparent 70%);
+            pointer-events:none;
+        }
+
+        /* Bench */
+        .park-bench{
+            position:absolute;bottom:128px;right:12%;z-index:2;
+        }
+        .pb-seat{
+            width:80px;height:6px;background:linear-gradient(90deg,#4a3520,#5a4028,#4a3520);
+            border-radius:2px;
+        }
+        .pb-leg{position:absolute;bottom:-15px;width:4px;height:15px;background:#3a2518;border-radius:0 0 2px 2px;}
+        .pb-leg-l{left:8px;}
+        .pb-leg-r{right:8px;}
+
+        /* Characters */
+        .char-him{
+            position:absolute;bottom:125px;left:-160px;width:130px;height:235px;
+            z-index:5;transition:left 2.2s cubic-bezier(.25,.46,.45,.94) .5s;
+        }
+        .scene-stage.active .char-him{left:30%;}
+        .scene-stage.embracing .char-him{left:35%;transition:left 1.5s cubic-bezier(.25,.46,.45,.94);}
+
+        .char-her{
+            position:absolute;bottom:125px;right:-160px;width:120px;height:240px;
+            z-index:5;transition:right 2.2s cubic-bezier(.25,.46,.45,.94) 1s;
+        }
+        .scene-stage.active .char-her{right:30%;}
+        .scene-stage.embracing .char-her{right:35%;transition:right 1.5s cubic-bezier(.25,.46,.45,.94);}
+
+        /* Hug arms overlay */
+        .hug-arms-overlay{
+            position:absolute;top:42%;left:50%;transform:translateX(-50%);
+            font-size:3rem;opacity:0;transition:all .8s ease;z-index:7;
+        }
+        .scene-stage.embraced .hug-arms-overlay{
+            opacity:1;animation:hugWarm 2s ease-in-out infinite;
+        }
+        @keyframes hugWarm{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.06);}}
+
+        /* Warmth glow between characters */
+        .couple-glow{
+            position:absolute;top:30%;left:50%;transform:translateX(-50%);
+            width:100px;height:150px;border-radius:50%;
+            background:radial-gradient(ellipse,rgba(240,180,100,.15),transparent 70%);
+            opacity:0;transition:opacity 1s ease;z-index:6;pointer-events:none;
+        }
+        .scene-stage.embraced .couple-glow{opacity:1;animation:warmPulse 3s ease-in-out infinite;}
+
+        .scene-text{
+            position:absolute;font-family:'Great Vibes',cursive;z-index:10;
+            pointer-events:none;opacity:0;transition:opacity 1s ease;
+            filter:drop-shadow(0 0 20px rgba(220,140,80,.5));
+        }
+        .text-warmth{
+            top:12%;left:50%;transform:translateX(-50%);font-size:2.5rem;
+            background:linear-gradient(135deg,#f0c8a0,#f8e0c0);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+        }
+        .scene-stage.embracing .text-warmth{opacity:1;animation:loveP 2s ease-in-out infinite;}
+        .text-safe{
+            top:6%;left:50%;transform:translateX(-50%);font-size:3rem;white-space:nowrap;
+            background:linear-gradient(135deg,#ffd700,#f0c8a0,#e08050);
+            background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;animation:shimmer 3s ease-in-out infinite;
+        }
+        .scene-stage.embraced .text-safe{opacity:1;}
+        @keyframes loveP{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.05);}}
+
+        .scene-play{
+            position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+            width:85px;height:85px;border-radius:50%;
+            background:rgba(220,140,80,.15);border:2px solid rgba(220,140,80,.3);
+            display:flex;align-items:center;justify-content:center;
+            cursor:pointer;transition:all .4s ease;z-index:20;
+        }
+        .scene-play:hover{background:rgba(220,140,80,.3);transform:translate(-50%,-50%) scale(1.1);}
+        .scene-play svg{width:30px;height:30px;fill:#d4a070;margin-left:4px;}
+        .scene-stage.active .scene-play{opacity:0;pointer-events:none;transition:opacity .5s;}
+
+        .hearts-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:8;}
+
+        /* CARDS */
+        .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;}
+        .card{
+            background:linear-gradient(145deg,rgba(50,30,18,.6),rgba(20,12,8,.8));
+            backdrop-filter:blur(10px);border:1px solid rgba(220,140,80,.1);
+            border-radius:20px;padding:2.5rem 2rem;text-align:center;
+            transition:all .5s ease;opacity:0;transform:translateY(40px);
+            position:relative;overflow:hidden;
+        }
+        .card.visible{opacity:1;transform:translateY(0);}
+        .card:hover{transform:translateY(-8px);border-color:rgba(220,140,80,.3);box-shadow:0 20px 60px rgba(100,60,20,.15);}
+        .card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(220,140,80,.04),transparent);transition:left .7s ease;}
+        .card:hover::before{left:100%;}
+        .card-icon{font-size:3rem;margin-bottom:1rem;}
+        .card-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:#f0c8a0;margin-bottom:.8rem;font-weight:700;}
+        .card-text{font-style:italic;color:#a08868;line-height:1.8;font-size:.95rem;}
+
+        /* POEM */
+        .poem-section{padding:5rem 2rem;text-align:center;}
+        .poem-card{
+            max-width:680px;margin:0 auto;padding:3rem;
+            background:linear-gradient(145deg,rgba(45,28,16,.4),rgba(12,8,5,.6));
+            border-radius:24px;border:1px solid rgba(220,140,80,.1);position:relative;
+        }
+        .poem-card::before,.poem-card::after{content:'"';font-family:'Great Vibes',cursive;font-size:6rem;color:rgba(220,140,80,.1);position:absolute;}
+        .poem-card::before{top:10px;left:20px;}
+        .poem-card::after{content:'"';bottom:-20px;right:20px;}
+        .poem-text{font-style:italic;font-size:1.05rem;line-height:2.2;color:#e0ccb8;}
+        .poem-text .line{display:block;opacity:0;animation:fadeUp .8s ease forwards;}
+        .poem-author{margin-top:1.5rem;font-family:'Playfair Display',serif;color:#a07850;font-size:.95rem;letter-spacing:3px;}
+
+        /* HUG MEANING ROWS */
+        .meanings-list{max-width:800px;margin:0 auto;}
+        .meaning-row{
+            display:flex;align-items:center;gap:2rem;margin-bottom:2rem;
+            padding:1.5rem 2rem;background:linear-gradient(135deg,rgba(40,24,14,.5),rgba(16,10,6,.5));
+            border-radius:16px;border:1px solid rgba(220,140,80,.08);
+            transition:all .4s ease;opacity:0;transform:translateX(-30px);
+        }
+        .meaning-row.visible{opacity:1;transform:translateX(0);}
+        .meaning-row:nth-child(even){transform:translateX(30px);}
+        .meaning-row:nth-child(even).visible{transform:translateX(0);}
+        .meaning-row:hover{border-color:rgba(220,140,80,.25);box-shadow:0 8px 30px rgba(100,60,20,.1);}
+        .m-icon{font-size:2.2rem;flex-shrink:0;}
+        .m-info h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:#f0c8a0;margin-bottom:.3rem;}
+        .m-info p{color:#9a7858;font-style:italic;font-size:.9rem;line-height:1.6;}
+
+        /* FOOTER */
+        .footer{text-align:center;padding:3rem 2rem;border-top:1px solid rgba(220,140,80,.08);margin-top:2rem;}
+        .footer-text{font-family:'Great Vibes',cursive;font-size:1.8rem;color:#a07850;margin-bottom:.5rem;}
+        .footer-sub{font-size:.8rem;color:#6a4a30;letter-spacing:4px;text-transform:uppercase;}
+        .heart-beat{display:inline-block;animation:hb 1.5s ease-in-out infinite;color:#d48040;}
+        @keyframes hb{0%,100%{transform:scale(1);}15%{transform:scale(1.25);}30%{transform:scale(1);}45%{transform:scale(1.15);}60%{transform:scale(1);}}
+
+        /* NAV */
+        .week-nav{
+            position:fixed;top:0;left:0;right:0;z-index:50;
+            background:rgba(20,16,12,.9);backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(220,140,80,.08);
+            padding:.6rem 1rem;display:flex;justify-content:center;gap:.3rem;flex-wrap:wrap;
+        }
+        .week-nav a{
+            color:#6a5040;text-decoration:none;font-size:.7rem;letter-spacing:2px;
+            text-transform:uppercase;padding:.4rem .8rem;border-radius:20px;
+            transition:all .3s;font-family:'Playfair Display',serif;
+        }
+        .week-nav a:hover{color:#f0c8a0;background:rgba(220,140,80,.1);}
+        .week-nav a.active{color:#d4a070;background:rgba(220,140,80,.15);}
+
+        .burst{position:fixed;pointer-events:none;z-index:998;animation:burstA 1.5s ease-out forwards;}
+        @keyframes burstA{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0) rotate(var(--rot));}}
+
+        #confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100;}
+
+        @media(max-width:768px){
+            .meaning-row{flex-direction:column;text-align:center;gap:1rem;}
+            .scene-stage{height:440px;}
+            .scene-stage.active .char-him{left:15%;}
+            .scene-stage.active .char-her{right:12%;}
+            .scene-stage.embracing .char-him{left:22%;}
+            .scene-stage.embracing .char-her{right:18%;}
+            .text-warmth{font-size:1.8rem!important;}
+            .text-safe{font-size:2rem!important;}
+            .cards-grid{grid-template-columns:1fr;}
+            .embrace-container{width:260px;height:320px;}
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-loader" id="loader">
+    <div class="loader-icon">🤗</div>
+    <div class="loader-text">Warming up a hug...</div>
+</div>
+
+<canvas id="confettiCanvas"></canvas>
+
+<nav class="week-nav">
+    <a href="1.html">🌹 Rose</a>
+    <a href="2.html">💍 Propose</a>
+    <a href="3.html">🍫 Chocolate</a>
+    <a href="4.html">🧸 Teddy</a>
+    <a href="5.html">🤞 Promise</a>
+    <a href="6.html" class="active">🤗 Hug</a>
+    <a href="7.html">💋 Kiss</a>
+    <a href="8.html">❤️ Valentine</a>
+</nav>
+
+<div class="stars" id="stars"></div>
+<div class="particle-container" id="particles"></div>
+<div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+
+<div class="content">
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-icon">🤗</div>
+        <p class="hero-sub">✦ 12th February 2026 ✦</p>
+        <h1 class="hero-title">Happy Hug Day</h1>
+        <p class="hero-date">Where Words End, Hugs Begin</p>
+        <div class="divider"></div>
+        <p class="hero-msg">
+            A hug is a silent way of saying "you matter to me." It speaks when words can't, 
+            heals when nothing else can, and warms the coldest hearts. Today, hold someone close.
+        </p>
+        <div class="scroll-hint"><span>Explore</span><div class="scroll-arrow"></div></div>
+    </section>
+
+    <!-- EMBRACE ANIMATION -->
+    <section class="embrace-section">
+        <h2 class="section-title">Feel the Embrace</h2>
+        <p class="section-sub">Click to bring them together 🤗</p>
+
+        <div class="embrace-container" id="embraceC" onclick="doEmbrace(event)">
+            <div class="embrace-hearts" id="embraceHearts"></div>
+            <svg class="embrace-svg" viewBox="0 0 320 370" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="warmGlow" cx="50%" cy="50%">
+                        <stop offset="0%" style="stop-color:rgba(240,180,100,.25)"/>
+                        <stop offset="100%" style="stop-color:transparent"/>
+                    </radialGradient>
+                </defs>
+
+                <!-- Warmth glow between -->
+                <ellipse class="warmth-glow" cx="160" cy="170" rx="50" ry="70" fill="url(#warmGlow)"/>
+
+                <!-- HIM (left figure) - bright face -->
+                <g class="figure-left">
+                    <!-- Head -->
+                    <circle cx="120" cy="55" r="28" fill="#e8c4a0"/>
+                    <!-- Hair -->
+                    <path d="M92 48 Q96 26 120 22 Q144 26 148 48 Q144 38 134 35 Q108 31 96 38Z" fill="#2a1a10"/>
+                    <path d="M92 50 Q88 48 90 56" fill="#2a1a10"/>
+                    <path d="M148 50 Q152 48 150 56" fill="#2a1a10"/>
+                    <!-- Ears -->
+                    <ellipse cx="92" cy="58" rx="5" ry="7" fill="#ddb890"/>
+                    <ellipse cx="148" cy="58" rx="5" ry="7" fill="#ddb890"/>
+                    <!-- Eyebrows -->
+                    <path d="M105 44 Q112 40 118 44" stroke="#2a1a10" stroke-width="1.5" fill="none"/>
+                    <path d="M122 44 Q128 40 135 44" stroke="#2a1a10" stroke-width="1.5" fill="none"/>
+                    <!-- Eyes (closed - in peace) -->
+                    <path d="M106 50 Q112 47 118 50" stroke="#2a1a10" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                    <path d="M122 50 Q128 47 134 50" stroke="#2a1a10" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                    <!-- Eyelashes -->
+                    <line x1="106" y1="50" x2="105" y2="48" stroke="#2a1a10" stroke-width=".8"/>
+                    <line x1="118" y1="50" x2="119" y2="48" stroke="#2a1a10" stroke-width=".8"/>
+                    <line x1="122" y1="50" x2="121" y2="48" stroke="#2a1a10" stroke-width=".8"/>
+                    <line x1="134" y1="50" x2="135" y2="48" stroke="#2a1a10" stroke-width=".8"/>
+                    <!-- Nose -->
+                    <path d="M120 53 Q117 58 120 59 Q123 58 120 53" fill="#d4a880" opacity=".6"/>
+                    <!-- Peaceful smile -->
+                    <path d="M112 64 Q120 70 128 64" stroke="#a06040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    <!-- Blush -->
+                    <ellipse cx="104" cy="60" rx="6" ry="3" fill="#e8a088" opacity=".3"/>
+                    <ellipse cx="136" cy="60" rx="6" ry="3" fill="#e8a088" opacity=".3"/>
+                    <!-- Neck -->
+                    <rect x="113" y="80" width="14" height="12" fill="#e0b890" rx="3"/>
+                    <!-- Sweater -->
+                    <path d="M80 92 Q70 100 65 160 L65 270 Q65 275 72 275 L105 275 L105 220 L135 220 L135 275 L168 275 Q175 275 175 270 L175 160 Q170 100 160 92Z" fill="#5a6a4a"/>
+                    <!-- Sweater collar -->
+                    <path d="M100 92 L120 104 L140 92" fill="#e0b890"/>
+                    <!-- Sweater texture -->
+                    <path d="M78 120 Q120 115 162 120" stroke="#4a5a3a" stroke-width=".8" fill="none" opacity=".3"/>
+                    <path d="M72 150 Q120 145 168 150" stroke="#4a5a3a" stroke-width=".8" fill="none" opacity=".3"/>
+                    <!-- Left arm (natural) -->
+                    <path d="M80 98 Q58 118 62 155 Q58 168 66 165" fill="#5a6a4a"/>
+                    <circle cx="65" cy="162" r="8" fill="#e0b890"/>
+                    <path d="M59 160 Q57 164 59 166" stroke="#d4a880" stroke-width="1.2" fill="none"/>
+                    <!-- Pants -->
+                    <rect x="95" y="268" width="18" height="55" rx="6" fill="#2a2a3a"/>
+                    <rect x="125" y="268" width="18" height="55" rx="6" fill="#2a2a3a"/>
+                    <!-- Shoes -->
+                    <ellipse cx="104" cy="325" rx="14" ry="5" fill="#1a1210"/>
+                    <ellipse cx="134" cy="325" rx="14" ry="5" fill="#1a1210"/>
+                </g>
+
+                <!-- HER (right figure) - bright face -->
+                <g class="figure-right">
+                    <!-- Hair long -->
+                    <path d="M175 42 Q170 20 200 16 Q230 20 225 42 L228 75 Q232 95 224 105 L218 80 L200 72 L182 80 L176 105 Q168 95 172 75Z" fill="#1a0a06"/>
+                    <path d="M175 52 Q167 62 170 85 Q166 98 168 108" stroke="#1a0a06" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <path d="M225 52 Q233 62 230 85 Q234 98 232 108" stroke="#1a0a06" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <!-- Head -->
+                    <circle cx="200" cy="52" r="26" fill="#f0d0b0"/>
+                    <!-- Hair front -->
+                    <path d="M174 44 Q178 24 200 20 Q222 24 226 44 Q222 36 214 33 Q188 29 178 36Z" fill="#1a0a06"/>
+                    <path d="M174 46 Q170 50 172 56" stroke="#1a0a06" stroke-width="2.5" fill="none"/>
+                    <path d="M226 46 Q230 50 228 56" stroke="#1a0a06" stroke-width="2.5" fill="none"/>
+                    <!-- Ears -->
+                    <ellipse cx="174" cy="54" rx="4" ry="6" fill="#e8c4a0"/>
+                    <ellipse cx="226" cy="54" rx="4" ry="6" fill="#e8c4a0"/>
+                    <!-- Earrings -->
+                    <circle cx="174" cy="62" r="2.5" fill="#d48040" opacity=".7"/>
+                    <circle cx="226" cy="62" r="2.5" fill="#d48040" opacity=".7"/>
+                    <!-- Eyebrows -->
+                    <path d="M188 42 Q194 38 200 42" stroke="#1a0a06" stroke-width="1.1" fill="none"/>
+                    <path d="M200 42 Q206 38 212 42" stroke="#1a0a06" stroke-width="1.1" fill="none"/>
+                    <!-- Eyes (closed - content) -->
+                    <path d="M188 48 Q194 45 200 48" stroke="#1a0a06" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                    <path d="M200 48 Q206 45 212 48" stroke="#1a0a06" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                    <!-- Eyelashes -->
+                    <line x1="188" y1="48" x2="187" y2="46" stroke="#1a0a06" stroke-width=".8"/>
+                    <line x1="200" y1="48" x2="200" y2="46" stroke="#1a0a06" stroke-width=".8"/>
+                    <line x1="212" y1="48" x2="213" y2="46" stroke="#1a0a06" stroke-width=".8"/>
+                    <!-- Nose -->
+                    <path d="M200 51 Q197 56 200 57 Q203 56 200 51" fill="#e0b898" opacity=".5"/>
+                    <!-- Content smile -->
+                    <path d="M192 62 Q200 68 208 62" stroke="#c45060" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+                    <!-- Blush -->
+                    <ellipse cx="185" cy="58" rx="6" ry="3" fill="#e8a090" opacity=".35"/>
+                    <ellipse cx="215" cy="58" rx="6" ry="3" fill="#e8a090" opacity=".35"/>
+                    <!-- Neck -->
+                    <rect x="194" y="76" width="12" height="10" fill="#ecc8a8" rx="3"/>
+                    <!-- Necklace -->
+                    <path d="M186 84 Q200 90 214 84" stroke="#d48040" stroke-width="1" fill="none" opacity=".6"/>
+                    <circle cx="200" cy="89" r="2.5" fill="#d48040" opacity=".6"/>
+                    <!-- Cardigan/dress -->
+                    <path d="M168 86 Q154 96 146 170 Q142 200 152 220 L178 230 L200 233 L222 230 L248 220 Q258 200 254 170 Q246 96 232 86Z" fill="#c06838"/>
+                    <path d="M180 86 Q200 96 220 86" fill="#ecc8a8"/>
+                    <!-- Cardigan details -->
+                    <path d="M178 92 Q174 130 166 190" stroke="#b05828" stroke-width="1" fill="none" opacity=".3"/>
+                    <path d="M222 92 Q226 130 234 190" stroke="#b05828" stroke-width="1" fill="none" opacity=".3"/>
+                    <!-- Belt -->
+                    <path d="M156 160 Q200 155 244 160" stroke="#8a3828" stroke-width="2" fill="none"/>
+                    <!-- Right arm (natural) -->
+                    <path d="M232 92 Q252 112 248 150 Q252 162 244 158" fill="#c06838"/>
+                    <circle cx="246" cy="156" r="7" fill="#ecc8a8"/>
+                    <path d="M240 154 Q242 158 240 160" stroke="#ddb898" stroke-width="1.2" fill="none"/>
+                    <!-- Leggings -->
+                    <rect x="178" y="226" width="14" height="40" rx="5" fill="#3a2020"/>
+                    <rect x="208" y="226" width="14" height="40" rx="5" fill="#3a2020"/>
+                    <!-- Boots -->
+                    <ellipse cx="185" cy="268" rx="11" ry="5" fill="#4a2818"/>
+                    <ellipse cx="215" cy="268" rx="11" ry="5" fill="#4a2818"/>
+                </g>
+
+                <!-- WRAPPING ARMS (appear on hug) -->
+                <!-- His right arm wrapping around her -->
+                <g class="arm-wrap-l">
+                    <path d="M160 100 Q180 110 210 130 Q230 145 225 160 Q228 170 220 168" fill="#5a6a4a" opacity=".9"/>
+                    <circle cx="222" cy="166" r="7" fill="#e0b890"/>
+                </g>
+                <!-- Her left arm wrapping around him -->
+                <g class="arm-wrap-r">
+                    <path d="M168 92 Q150 105 125 125 Q108 140 112 155 Q108 165 116 162" fill="#c06838" opacity=".9"/>
+                    <circle cx="114" cy="160" r="6.5" fill="#ecc8a8"/>
+                </g>
+
+                <!-- Sparkle ring around them -->
+                <g class="hug-sparkle">
+                    <circle cx="160" cy="100" r="3" fill="#ffd700" opacity=".6">
+                        <animate attributeName="opacity" values=".3;.8;.3" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="130" cy="140" r="2.5" fill="#f0c870" opacity=".5">
+                        <animate attributeName="opacity" values=".5;.9;.5" dur="2.5s" begin=".3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="190" cy="130" r="2" fill="#ffd700" opacity=".4">
+                        <animate attributeName="opacity" values=".4;.8;.4" dur="1.8s" begin=".6s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="145" cy="190" r="2.5" fill="#f0c870" opacity=".5">
+                        <animate attributeName="opacity" values=".3;.7;.3" dur="2.2s" begin=".9s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="175" cy="200" r="3" fill="#ffd700" opacity=".4">
+                        <animate attributeName="opacity" values=".4;.9;.4" dur="2.8s" begin="1.2s" repeatCount="indefinite"/>
+                    </circle>
+                </g>
+            </svg>
+        </div>
+        <p class="embrace-label" id="embraceLabel">✦ tap to hug ✦</p>
+        <div class="embrace-msg" id="embraceMsg">In your arms, I am home 🤗💛</div>
+    </section>
+
+    <!-- WARMTH METER -->
+    <section class="meter-section">
+        <h2 class="section-title">Warmth Meter</h2>
+        <p class="section-sub">Keep sending hugs to fill the warmth meter 🌡️</p>
+
+        <div class="meter-container" id="meterC" data-level="">
+            <div class="thermo-outer">
+                <div class="thermo-fill" id="thermoFill"></div>
+            </div>
+            <div class="thermo-marks">
+                <span class="t-mark">🔥 MAX</span>
+                <span class="t-mark">❤️ Hot</span>
+                <span class="t-mark">🧡 Warm</span>
+                <span class="t-mark">💛 Cozy</span>
+                <span class="t-mark">🤍 Cool</span>
+            </div>
+            <div class="thermo-bulb">
+                <div class="bulb-heart">❤️</div>
+            </div>
+        </div>
+        <button class="meter-btn" id="meterBtn" onclick="sendHug(event)">Send a Hug 🤗</button>
+        <p class="meter-label" id="meterLabel">Hugs sent: 0</p>
+        <div class="meter-msg" id="meterMsg">Maximum warmth reached! You're on fire! 🔥💕</div>
+    </section>
+
+    <!-- HUG TYPES CAROUSEL -->
+    <section class="hug-types-section">
+        <h2 class="section-title">Language of Hugs</h2>
+        <p class="section-sub">Every hug speaks a different language ← scroll →</p>
+
+        <div class="hug-carousel">
+            <div class="hug-type-card">
+                <div class="htc-icon">🫂</div>
+                <h3 class="htc-title">The Bear Hug</h3>
+                <p class="htc-desc">Tight, warm, and all-encompassing — says "I never want to let you go."</p>
+            </div>
+            <div class="hug-type-card">
+                <div class="htc-icon">💕</div>
+                <h3 class="htc-title">The Heart-to-Heart</h3>
+                <p class="htc-desc">Chest against chest, heartbeat syncing — the most intimate, soulful embrace.</p>
+            </div>
+            <div class="hug-type-card">
+                <div class="htc-icon">😊</div>
+                <h3 class="htc-title">The Side Hug</h3>
+                <p class="htc-desc">Casual, friendly, and comforting — "I'm right here beside you."</p>
+            </div>
+            <div class="hug-type-card">
+                <div class="htc-icon">🔙</div>
+                <h3 class="htc-title">The Back Hug</h3>
+                <p class="htc-desc">Arms wrapped from behind — protective, surprising, and deeply romantic.</p>
+            </div>
+            <div class="hug-type-card">
+                <div class="htc-icon">🏃</div>
+                <h3 class="htc-title">The Running Hug</h3>
+                <p class="htc-desc">The one where you run and leap — pure excitement, pure love.</p>
+            </div>
+            <div class="hug-type-card">
+                <div class="htc-icon">🕐</div>
+                <h3 class="htc-title">The Long Hold</h3>
+                <p class="htc-desc">No rush, no words — just holding on because letting go is too hard.</p>
+            </div>
+            <div class="hug-type-card">
+                <div class="htc-icon">😢</div>
+                <h3 class="htc-title">The Comfort Hug</h3>
+                <p class="htc-desc">Gentle, soft, with a hand on the head — "Everything will be okay."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- HUG SCENE -->
+    <section class="scene-section">
+        <h2 class="section-title">The Warmest Moment</h2>
+        <p class="section-sub">Press play to feel the warmth 💛</p>
+
+        <div class="scene-stage" id="sceneStage">
+            <div class="scene-play" onclick="playScene()">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+
+            <div class="park-sky"></div>
+            <div class="sunset-glow"></div>
+
+            <div class="leaf-container" id="leafC"></div>
+
+            <div class="lamp-post">
+                <div class="lamp-top"><div class="lamp-light"></div></div>
+                <div class="lamp-glow-area"></div>
+            </div>
+
+            <div class="park-bench">
+                <div class="pb-seat">
+                    <div class="pb-leg pb-leg-l"></div>
+                    <div class="pb-leg pb-leg-r"></div>
+                </div>
+            </div>
+
+            <div class="park-path"></div>
+            <div class="park-ground"></div>
+
+            <!-- HIM -->
+            <div class="char-him" id="sceneHim">
+                <svg viewBox="0 0 130 235" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="65" cy="30" r="22" fill="#e8c4a0"/>
+                    <path d="M43 24 Q46 6 65 3 Q84 6 87 24 Q84 16 76 14 Q56 11 47 16Z" fill="#2a1a10"/>
+                    <path d="M43 26 Q40 24 41 31" fill="#2a1a10"/>
+                    <path d="M87 26 Q90 24 89 31" fill="#2a1a10"/>
+                    <ellipse cx="43" cy="32" rx="4.5" ry="6" fill="#ddb890"/>
+                    <ellipse cx="87" cy="32" rx="4.5" ry="6" fill="#ddb890"/>
+                    <path d="M53 22 Q58 19 63 22" stroke="#2a1a10" stroke-width="1.2" fill="none"/>
+                    <path d="M67 22 Q72 19 77 22" stroke="#2a1a10" stroke-width="1.2" fill="none"/>
+                    <!-- Eyes open, looking right -->
+                    <ellipse cx="58" cy="28" rx="3.5" ry="3.5" fill="#fff"/>
+                    <ellipse cx="72" cy="28" rx="3.5" ry="3.5" fill="#fff"/>
+                    <circle cx="60" cy="28.5" r="2.2" fill="#3a2010"/>
+                    <circle cx="74" cy="28.5" r="2.2" fill="#3a2010"/>
+                    <circle cx="60.5" cy="27.8" r=".8" fill="#fff"/>
+                    <circle cx="74.5" cy="27.8" r=".8" fill="#fff"/>
+                    <path d="M65 31 Q63 35 65 36 Q67 35 65 31" fill="#d4a880" opacity=".5"/>
+                    <path d="M58 40 Q65 46 72 40" stroke="#a06040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    <path d="M61 41 Q65 44 69 41" fill="#fff" opacity=".35"/>
+                    <ellipse cx="51" cy="36" rx="5" ry="2.5" fill="#e8a088" opacity=".25"/>
+                    <ellipse cx="79" cy="36" rx="5" ry="2.5" fill="#e8a088" opacity=".25"/>
+                    <rect x="59" y="50" width="12" height="10" fill="#e0b890" rx="3"/>
+                    <!-- Scarf -->
+                    <path d="M50 58 Q65 64 80 58" fill="#c06838" opacity=".7"/>
+                    <path d="M58 60 L56 78 L60 79 L62 62" fill="#c06838" opacity=".6"/>
+                    <!-- Coat -->
+                    <path d="M35 60 Q26 70 22 130 L22 175 Q22 180 28 180 L55 180 L55 140 L75 140 L75 180 L102 180 Q108 180 108 175 L108 130 Q104 70 95 60Z" fill="#3a4a5a"/>
+                    <path d="M52 60 L65 74 L78 60" fill="#d0d8e0" opacity=".6"/>
+                    <!-- Coat buttons -->
+                    <circle cx="65" cy="90" r="2" fill="#2a3545" opacity=".5"/>
+                    <circle cx="65" cy="110" r="2" fill="#2a3545" opacity=".5"/>
+                    <circle cx="65" cy="130" r="2" fill="#2a3545" opacity=".5"/>
+                    <!-- Arms -->
+                    <path d="M35 66 Q16 85 20 118 Q17 128 24 125" fill="#3a4a5a"/>
+                    <circle cx="23" cy="123" r="7" fill="#e0b890"/>
+                    <path d="M95 66 Q114 85 110 118 Q113 128 106 125" fill="#3a4a5a"/>
+                    <circle cx="108" cy="123" r="7" fill="#e0b890"/>
+                    <!-- Pants -->
+                    <rect x="48" y="175" width="15" height="45" rx="5" fill="#1a1a2a"/>
+                    <rect x="67" y="175" width="15" height="45" rx="5" fill="#1a1a2a"/>
+                    <ellipse cx="55" cy="222" rx="11" ry="5" fill="#121018"/>
+                    <ellipse cx="75" cy="222" rx="11" ry="5" fill="#121018"/>
+                </svg>
+            </div>
+
+            <!-- HER -->
+            <div class="char-her" id="sceneHer">
+                <svg viewBox="0 0 120 240" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M35 18 Q32 3 60 0 Q88 3 85 18 L88 50 Q90 68 83 78 L78 55 L60 48 L42 55 L37 78 Q30 68 32 50Z" fill="#2a1508"/>
+                    <path d="M35 28 Q27 38 29 58 Q25 70 28 80" stroke="#2a1508" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+                    <path d="M85 28 Q93 38 91 58 Q95 70 92 80" stroke="#2a1508" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+                    <circle cx="60" cy="28" r="21" fill="#f0d0b0"/>
+                    <path d="M39 22 Q42 8 60 5 Q78 8 81 22 Q78 16 70 14 Q50 11 43 16Z" fill="#2a1508"/>
+                    <path d="M39 24 Q36 28 37 34" stroke="#2a1508" stroke-width="2.5" fill="none"/>
+                    <path d="M81 24 Q84 28 83 34" stroke="#2a1508" stroke-width="2.5" fill="none"/>
+                    <ellipse cx="39" cy="30" rx="3.5" ry="5" fill="#e8c4a0"/>
+                    <ellipse cx="81" cy="30" rx="3.5" ry="5" fill="#e8c4a0"/>
+                    <circle cx="39" cy="37" r="2" fill="#d48040" opacity=".7"/>
+                    <circle cx="81" cy="37" r="2" fill="#d48040" opacity=".7"/>
+                    <path d="M49 20 Q54 17 59 20" stroke="#2a1508" stroke-width="1" fill="none"/>
+                    <path d="M61 20 Q66 17 71 20" stroke="#2a1508" stroke-width="1" fill="none"/>
+                    <!-- Eyes looking left -->
+                    <ellipse cx="54" cy="26" rx="3.5" ry="3.8" fill="#fff"/>
+                    <ellipse cx="66" cy="26" rx="3.5" ry="3.8" fill="#fff"/>
+                    <circle cx="53" cy="26.5" r="2.3" fill="#3a2010"/>
+                    <circle cx="65" cy="26.5" r="2.3" fill="#3a2010"/>
+                    <circle cx="53.5" cy="25.8" r=".9" fill="#fff"/>
+                    <circle cx="65.5" cy="25.8" r=".9" fill="#fff"/>
+                    <path d="M50 23 Q52 21.5 54 23" stroke="#2a1508" stroke-width=".7" fill="none"/>
+                    <path d="M54 23 Q56 21.5 58 23" stroke="#2a1508" stroke-width=".7" fill="none"/>
+                    <path d="M62 23 Q64 21.5 66 23" stroke="#2a1508" stroke-width=".7" fill="none"/>
+                    <path d="M66 23 Q68 21.5 70 23" stroke="#2a1508" stroke-width=".7" fill="none"/>
+                    <path d="M60 28 Q58 33 60 34 Q62 33 60 28" fill="#e0b898" opacity=".5"/>
+                    <path d="M54 38 Q57 36 60 38 Q63 36 66 38" stroke="#c45060" stroke-width=".8" fill="none"/>
+                    <path d="M54 38 Q60 43 66 38" fill="#d45868" opacity=".45"/>
+                    <ellipse cx="47" cy="34" rx="5.5" ry="3" fill="#e8a090" opacity=".35"/>
+                    <ellipse cx="73" cy="34" rx="5.5" ry="3" fill="#e8a090" opacity=".35"/>
+                    <rect x="54" y="47" width="12" height="9" fill="#ecc8a8" rx="3"/>
+                    <path d="M48 54 Q60 60 72 54" stroke="#d48040" stroke-width="1" fill="none" opacity=".5"/>
+                    <circle cx="60" cy="59" r="2" fill="#d48040" opacity=".5"/>
+                    <!-- Warm coat -->
+                    <path d="M34 56 Q20 65 12 140 Q8 165 18 185 L42 195 L60 198 L78 195 L102 185 Q112 165 108 140 Q100 65 86 56Z" fill="#b05838"/>
+                    <path d="M44 56 Q60 65 76 56" fill="#ecc8a8"/>
+                    <path d="M48 60 Q44 100 36 160" stroke="#a04828" stroke-width="1" fill="none" opacity=".3"/>
+                    <path d="M72 60 Q76 100 84 160" stroke="#a04828" stroke-width="1" fill="none" opacity=".3"/>
+                    <path d="M22 140 Q60 135 98 140" stroke="#8a3818" stroke-width="2" fill="none"/>
+                    <!-- Arms -->
+                    <path d="M34 62 Q16 78 16 106 Q13 116 20 113" fill="#b05838"/>
+                    <circle cx="19" cy="111" r="6" fill="#ecc8a8"/>
+                    <path d="M86 62 Q104 78 104 106 Q107 116 100 113" fill="#b05838"/>
+                    <circle cx="101" cy="111" r="6" fill="#ecc8a8"/>
+                    <rect x="38" y="192" width="14" height="35" rx="5" fill="#3a2020"/>
+                    <rect x="68" y="192" width="14" height="35" rx="5" fill="#3a2020"/>
+                    <ellipse cx="45" cy="229" rx="10" ry="4" fill="#5a2818"/>
+                    <ellipse cx="75" cy="229" rx="10" ry="4" fill="#5a2818"/>
+                </svg>
+            </div>
+
+            <!-- Hug overlay -->
+            <div class="hug-arms-overlay" id="hugOverlay">🤗</div>
+            <div class="couple-glow"></div>
+
+            <div class="scene-text text-warmth">Come Here...</div>
+            <div class="scene-text text-safe">You're Safe in My Arms 🤗💛</div>
+
+            <canvas class="hearts-canvas" id="heartsCanvas"></canvas>
+        </div>
+        <p class="section-sub" style="margin-top:1.5rem;">✦ warmth that lasts forever ✦</p>
+    </section>
+
+    <!-- WISHES -->
+    <section class="section">
+        <h2 class="section-title">Warm Wishes</h2>
+        <p class="section-sub">Words wrapped in the warmest embrace</p>
+        <div class="cards-grid">
+            <div class="card" data-delay="0">
+                <div class="card-icon">🤗</div>
+                <h3 class="card-title">For My Love</h3>
+                <p class="card-text">"In a world full of chaos, your arms are my calm. Happy Hug Day — hold me like you'll never let go, because I never want you to."</p>
+            </div>
+            <div class="card" data-delay="200">
+                <div class="card-icon">🫂</div>
+                <h3 class="card-title">For My Friend</h3>
+                <p class="card-text">"Some hugs fix everything — and yours is one of them. Thank you for being the warmth I always come back to."</p>
+            </div>
+            <div class="card" data-delay="400">
+                <div class="card-icon">💛</div>
+                <h3 class="card-title">For Someone Far</h3>
+                <p class="card-text">"Distance means nothing when someone means everything. Sending you the tightest virtual hug — feel it in your heart."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEANINGS -->
+    <section class="section">
+        <h2 class="section-title">Science of Hugs</h2>
+        <div class="meanings-list">
+            <div class="meaning-row" data-delay="0"><span class="m-icon">🧠</span><div class="m-info"><h3>Releases Oxytocin</h3><p>"The 'love hormone' floods your brain — reducing stress, building trust, and deepening bonds."</p></div></div>
+            <div class="meaning-row" data-delay="150"><span class="m-icon">❤️</span><div class="m-info"><h3>Lowers Heart Rate</h3><p>"A 20-second hug calms the heart and lowers blood pressure — nature's medicine."</p></div></div>
+            <div class="meaning-row" data-delay="300"><span class="m-icon">😌</span><div class="m-info"><h3>Reduces Anxiety</h3><p>"Deep pressure from a hug activates your parasympathetic system — instant peace."</p></div></div>
+            <div class="meaning-row" data-delay="450"><span class="m-icon">💪</span><div class="m-info"><h3>Boosts Immunity</h3><p>"Regular hugs stimulate the thymus gland, balancing your white blood cell production."</p></div></div>
+            <div class="meaning-row" data-delay="600"><span class="m-icon">😊</span><div class="m-info"><h3>Increases Happiness</h3><p>"Serotonin and dopamine spike — hugs are nature's antidepressant."</p></div></div>
+        </div>
+    </section>
+
+    <!-- POEM -->
+    <section class="poem-section">
+        <h2 class="section-title">An Embrace in Words</h2>
+        <div class="poem-card">
+            <div class="poem-text" id="poemText">
+                <span class="line">When words run dry and tears won't end,</span>
+                <span class="line">When broken hearts need time to mend,</span>
+                <span class="line">There is a magic, warm and true —</span>
+                <span class="line">A simple hug from me to you.</span>
+                <span class="line">&nbsp;</span>
+                <span class="line">No language needed, no grand display,</span>
+                <span class="line">Just arms that hold the world away,</span>
+                <span class="line">So let me wrap you safe and tight —</span>
+                <span class="line">In my embrace, the world feels right.</span>
+            </div>
+            <p class="poem-author">— Wrapped in Love, on Hug Day 🤗</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p class="footer-text">Made with <span class="heart-beat">🧡</span> on Hug Day</p>
+        <p class="footer-sub">May you always have warm arms to come home to 🤗</p>
+    </footer>
+</div>
+
+<script>
+    // Loader
+    window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('loader').classList.add('hidden'),1500);});
+
+    // Stars
+    function createStars(){
+        const c=document.getElementById('stars');
+        for(let i=0;i<90;i++){
+            const s=document.createElement('div');s.className='star';
+            s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+            s.style.setProperty('--dur',(2+Math.random()*4)+'s');
+            s.style.setProperty('--op',(0.15+Math.random()*0.35));
+            s.style.animationDelay=Math.random()*4+'s';
+            const sz=1+Math.random()*2;s.style.width=sz+'px';s.style.height=sz+'px';
+            c.appendChild(s);
+        }
+    }
+
+    // Floating
+    function createFloat(){
+        const c=document.getElementById('particles');
+        const icons=['🤗','💛','✨','🫂','💕','🧡','💗','🤍'];
+        for(let i=0;i<12;i++){
+            const h=document.createElement('div');h.className='float-item';
+            h.textContent=icons[Math.floor(Math.random()*icons.length)];
+            h.style.left=Math.random()*100+'%';
+            h.style.setProperty('--sz',(.6+Math.random()*.7)+'rem');
+            h.style.setProperty('--dur',(12+Math.random()*15)+'s');
+            h.style.setProperty('--del',(Math.random()*12)+'s');
+            h.style.setProperty('--rot',(Math.random()*360)+'deg');
+            h.style.setProperty('--drift',(-50+Math.random()*100)+'px');
+            c.appendChild(h);
+        }
+    }
+
+    // Falling leaves in scene
+    function createLeaves(){
+        const c=document.getElementById('leafC');
+        const leaves=['🍂','🍁','🍃','🍂','🍁'];
+        for(let i=0;i<12;i++){
+            const l=document.createElement('div');l.className='falling-leaf';
+            l.textContent=leaves[Math.floor(Math.random()*leaves.length)];
+            l.style.left=Math.random()*100+'%';
+            l.style.setProperty('--lsz',(.6+Math.random()*.6)+'rem');
+            l.style.setProperty('--ldur',(6+Math.random()*8)+'s');
+            l.style.setProperty('--ldel',(Math.random()*10)+'s');
+            l.style.setProperty('--lrot',(180+Math.random()*360)+'deg');
+            l.style.setProperty('--ldrift',(-40+Math.random()*80)+'px');
+            c.appendChild(l);
+        }
+    }
+
+    // Observers
+    function setupObs(){
+        const obs=new IntersectionObserver(en=>{
+            en.forEach(e=>{if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),parseInt(e.target.dataset.delay||0));});
+        },{threshold:.2});
+        document.querySelectorAll('.card,.meaning-row').forEach(el=>obs.observe(el));
+        const pObs=new IntersectionObserver(en=>{
+            en.forEach(e=>{if(e.isIntersecting) e.target.querySelectorAll('.line').forEach((l,i)=>{l.style.animationDelay=(i*.2)+'s';});});
+        },{threshold:.3});
+        const pt=document.getElementById('poemText');if(pt)pObs.observe(pt);
+    }
+
+    // === EMBRACE ===
+    let embraced=false;
+    function doEmbrace(e){
+        const c=document.getElementById('embraceC');
+        if(embraced){
+            c.classList.remove('hugging');
+            document.getElementById('embraceLabel').textContent='✦ tap to hug ✦';
+            embraced=false;return;
+        }
+        embraced=true;
+        c.classList.add('hugging');
+        document.getElementById('embraceLabel').textContent='✦ tap to release ✦';
+
+        // Floating hearts
+        const hc=document.getElementById('embraceHearts');
+        const emojis=['❤️','💛','🧡','💕','✨','🤗','💗'];
+        for(let i=0;i<10;i++){
+            setTimeout(()=>{
+                const h=document.createElement('div');h.className='e-heart';
+                h.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+                h.style.setProperty('--hx',(-60+Math.random()*120)+'px');
+                h.style.setProperty('--hy',(-80-Math.random()*60)+'px');
+                h.style.fontSize=(.8+Math.random()*.8)+'rem';
+                hc.appendChild(h);
+                setTimeout(()=>h.remove(),2000);
+            },1200+i*200);
+        }
+
+        setTimeout(()=>createBurst(e,['🤗','💛','✨','💕','🧡','❤️','🫂'],16),1800);
+        setTimeout(()=>launchConfetti(),2500);
+    }
+
+    // === WARMTH METER ===
+    let hugsSent=0;
+    const maxHugs=20;
+    const meterLevels=[
+        {at:0,label:'Hugs sent: 0',msg:'',level:''},
+        {at:3,label:'Getting warmer! 🤗',msg:'',level:''},
+        {at:6,label:'Cozy and warm! 💛',msg:'',level:''},
+        {at:10,label:'Toasty! 🧡',msg:'',level:''},
+        {at:15,label:'HOT! ❤️‍🔥',msg:'',level:'high'},
+        {at:20,label:'MAXIMUM WARMTH! 🔥',msg:'show',level:'max'}
+    ];
+
+    function sendHug(e){
+        if(hugsSent>=maxHugs){
+            hugsSent=0;
+            document.getElementById('thermoFill').style.height='15%';
+            document.getElementById('meterLabel').textContent='Reset! Start hugging again 🤗';
+            document.getElementById('meterMsg').classList.remove('show');
+            document.getElementById('meterC').dataset.level='';
+            return;
+        }
+        hugsSent++;
+        const pct=15+((hugsSent/maxHugs)*85);
+        document.getElementById('thermoFill').style.height=pct+'%';
+
+        // Find current level
+        let currentLevel=meterLevels[0];
+        for(const lvl of meterLevels){
+            if(hugsSent>=lvl.at) currentLevel=lvl;
+        }
+        document.getElementById('meterLabel').textContent=currentLevel.label+` (${hugsSent}/${maxHugs})`;
+        document.getElementById('meterC').dataset.level=currentLevel.level;
+
+        if(hugsSent>=maxHugs){
+            document.getElementById('meterMsg').classList.add('show');
+            document.getElementById('meterBtn').textContent='Reset 🔄';
+            launchConfetti();
+        }
+
+        // Burst every 5
+        if(hugsSent%5===0){
+            createBurst(e,['🤗','❤️','🔥','💛','✨','🧡'],10);
+        }
+    }
+
+    // === SCENE ===
+    let scenePlaying=false;
+    function playScene(){
+        if(scenePlaying)return;
+        scenePlaying=true;
+        const s=document.getElementById('sceneStage');
+        s.classList.add('active');
+
+        // Embrace
+        setTimeout(()=>{s.classList.add('embracing');},3500);
+        // Embraced
+        setTimeout(()=>{s.classList.add('embraced');startHearts();},5500);
+        // Confetti
+        setTimeout(()=>launchConfetti(),6500);
+        // Reset
+        setTimeout(()=>{
+            s.classList.remove('active','embracing','embraced');
+            stopHearts();scenePlaying=false;
+        },14000);
+    }
+
+    // Hearts canvas
+    let hRAF=null,hArr=[];
+    function startHearts(){
+        const cv=document.getElementById('heartsCanvas'),ctx=cv.getContext('2d');
+        cv.width=cv.offsetWidth;cv.height=cv.offsetHeight;hArr=[];
+        function mk(){
+            return{x:cv.width*.25+Math.random()*cv.width*.5,y:cv.height*.5+Math.random()*40,
+                sz:5+Math.random()*12,sy:-.5-Math.random()*1.2,sx:-.4+Math.random()*.8,
+                op:1,col:['#d48040','#f0c8a0','#e08050','#ffd700','#c07040'][Math.floor(Math.random()*5)],
+                r:Math.random()*Math.PI*2,rs:-.015+Math.random()*.03};
+        }
+        for(let i=0;i<18;i++){const h=mk();h.y=Math.random()*cv.height;h.op=Math.random();hArr.push(h);}
+        function dh(ctx,x,y,s,c,o,r){
+            ctx.save();ctx.translate(x,y);ctx.rotate(r);ctx.globalAlpha=o;ctx.fillStyle=c;
+            ctx.beginPath();const v=s/2;
+            ctx.moveTo(0,v*.4);ctx.bezierCurveTo(-v,-v*.5,-v*2,v*.3,0,v*1.8);
+            ctx.bezierCurveTo(v*2,v*.3,v,-v*.5,0,v*.4);ctx.fill();ctx.restore();
+        }
+        function anim(){
+            ctx.clearRect(0,0,cv.width,cv.height);
+            hArr.forEach((h,i)=>{
+                h.y+=h.sy;h.x+=h.sx;h.op-=.003;h.r+=h.rs;
+                if(h.op<=0||h.y<-20)hArr[i]=mk();
+                dh(ctx,h.x,h.y,h.sz,h.col,h.op,h.r);
+            });
+            hRAF=requestAnimationFrame(anim);
+        }
+        anim();
+    }
+    function stopHearts(){
+        if(hRAF)cancelAnimationFrame(hRAF);
+        const cv=document.getElementById('heartsCanvas'),ctx=cv.getContext('2d');
+        ctx.clearRect(0,0,cv.width,cv.height);
+    }
+
+    // Burst
+    function createBurst(e,emojis,count=12){
+        const cx=e.clientX||window.innerWidth/2,cy=e.clientY||window.innerHeight/2;
+        for(let i=0;i<count;i++){
+            const b=document.createElement('div');b.className='burst';
+            b.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+            b.style.left=cx+'px';b.style.top=cy+'px';
+            b.style.fontSize=(1+Math.random()*1.5)+'rem';
+            const a=(i/count)*Math.PI*2,d=60+Math.random()*120;
+            b.style.setProperty('--tx',Math.cos(a)*d+'px');
+            b.style.setProperty('--ty',Math.sin(a)*d+'px');
+            b.style.setProperty('--rot',(Math.random()*360)+'deg');
+            document.body.appendChild(b);setTimeout(()=>b.remove(),1500);
+        }
+    }
+
+    // Confetti
+    function launchConfetti(){
+        const cv=document.getElementById('confettiCanvas'),ctx=cv.getContext('2d');
+        cv.width=window.innerWidth;cv.height=window.innerHeight;
+        const cf=[];
+        const cols=['#d48040','#f0c8a0','#e08050','#c07040','#ffd700','#f5e0c0','#b05838','#ff8c50'];
+        for(let i=0;i<140;i++){
+            cf.push({x:cv.width/2+(Math.random()-.5)*300,y:cv.height/2+(Math.random()-.5)*100,
+                w:5+Math.random()*6,h:3+Math.random()*4,
+                color:cols[Math.floor(Math.random()*cols.length)],
+                vx:-8+Math.random()*16,vy:-14+Math.random()*-2,
+                g:.12+Math.random()*.1,rot:Math.random()*360,
+                rotS:-6+Math.random()*12,op:1,decay:.004+Math.random()*.004});
+        }
+        function anim(){
+            ctx.clearRect(0,0,cv.width,cv.height);let alive=false;
+            cf.forEach(c=>{
+                if(c.op<=0)return;alive=true;
+                c.x+=c.vx;c.vy+=c.g;c.y+=c.vy;c.vx*=.99;c.rot+=c.rotS;c.op-=c.decay;
+                ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.rot*Math.PI/180);
+                ctx.globalAlpha=Math.max(0,c.op);ctx.fillStyle=c.color;
+                ctx.fillRect(-c.w/2,-c.h/2,c.w,c.h);ctx.restore();
+            });
+            if(alive)requestAnimationFrame(anim);else ctx.clearRect(0,0,cv.width,cv.height);
+        }
+        anim();
+    }
+
+    // Click sparkle
+    document.addEventListener('click',e=>{
+        if(e.target.closest('.embrace-container')||e.target.closest('.scene-stage')||e.target.closest('.meter-btn'))return;
+        const s=document.createElement('div');s.className='burst';s.textContent='✨';
+        s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';s.style.fontSize='1rem';
+        s.style.setProperty('--tx',(-20+Math.random()*40)+'px');
+        s.style.setProperty('--ty',(-50+Math.random()*20)+'px');
+        s.style.setProperty('--rot','0deg');
+        document.body.appendChild(s);setTimeout(()=>s.remove(),1500);
+    });
+
+    window.addEventListener('resize',()=>{const c=document.getElementById('confettiCanvas');c.width=window.innerWidth;c.height=window.innerHeight;});
+
+    createStars();createFloat();createLeaves();setupObs();
+</script>
+</body>
+</html>

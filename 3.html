@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍫 Happy Chocolate Day 🍫</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        ::selection{background:rgba(180,120,60,.3);color:#fff;}
+
+        body{
+            min-height:100vh;
+            background:linear-gradient(135deg,#1a0e08 0%,#2a1508 25%,#1a0f0a 50%,#120a06 100%);
+            font-family:'Lora',serif;overflow-x:hidden;color:#f5e8d8;
+        }
+
+        /* ===== LOADER ===== */
+        .page-loader{
+            position:fixed;top:0;left:0;width:100%;height:100%;
+            background:#1a0e08;z-index:9999;
+            display:flex;align-items:center;justify-content:center;flex-direction:column;
+            transition:opacity .8s ease,visibility .8s ease;
+        }
+        .page-loader.hidden{opacity:0;visibility:hidden;}
+        .loader-icon{font-size:4rem;animation:loaderP 1s ease-in-out infinite;}
+        @keyframes loaderP{0%,100%{transform:scale(1);opacity:.7;}50%{transform:scale(1.2);opacity:1;}}
+        .loader-text{font-family:'Great Vibes',cursive;font-size:1.5rem;color:#c8956c;margin-top:1rem;}
+
+        /* ===== BG ===== */
+        .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+        .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur) ease-in-out infinite;opacity:0;}
+        @keyframes twinkle{0%,100%{opacity:0;}50%{opacity:var(--op);}}
+
+        .particle-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;}
+        .float-item{
+            position:absolute;top:105%;opacity:0;font-size:var(--sz);
+            animation:floatUp var(--dur) var(--del) ease-in infinite;
+        }
+        @keyframes floatUp{
+            0%{opacity:0;transform:translateY(0) rotate(0deg) scale(.5);}
+            10%{opacity:.7;transform:translateY(-10vh) rotate(10deg) scale(1);}
+            90%{opacity:.3;}
+            100%{opacity:0;transform:translateY(-115vh) rotate(var(--rot)) translateX(var(--drift)) scale(.3);}
+        }
+
+        .orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.1;z-index:0;animation:orbF 14s ease-in-out infinite;}
+        .orb-1{width:400px;height:400px;background:radial-gradient(circle,#c8782a,transparent);top:10%;left:5%;}
+        .orb-2{width:350px;height:350px;background:radial-gradient(circle,#a0522d,transparent);top:50%;right:5%;animation-delay:-5s;}
+        .orb-3{width:300px;height:300px;background:radial-gradient(circle,#d4956a,transparent);bottom:10%;left:35%;animation-delay:-9s;}
+        @keyframes orbF{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-20px) scale(1.1);}66%{transform:translate(-20px,20px) scale(.9);}}
+
+        .content{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;}
+
+        /* ===== HERO ===== */
+        .hero{
+            min-height:100vh;display:flex;flex-direction:column;align-items:center;
+            justify-content:center;text-align:center;padding:2rem;position:relative;
+        }
+        .hero-icon{font-size:5rem;margin-bottom:1.5rem;animation:floatI 4s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(200,140,60,.5));}
+        @keyframes floatI{0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);}}
+
+        .hero-sub{
+            font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:8px;
+            text-transform:uppercase;color:#c8956c;margin-bottom:.5rem;
+            opacity:0;animation:fadeUp 1s .3s ease forwards;
+        }
+        .hero-title{
+            font-family:'Great Vibes',cursive;font-size:clamp(3.5rem,10vw,8rem);
+            background:linear-gradient(135deg,#d4a06a,#8B4513,#d4a06a,#f5d5b0);
+            background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;animation:fadeUp 1s .6s ease forwards,shimmer 4s ease-in-out infinite;
+            opacity:0;line-height:1.2;margin-bottom:1rem;
+        }
+        .hero-date{
+            font-family:'Playfair Display',serif;font-size:1.2rem;letter-spacing:12px;
+            color:#a07050;margin-bottom:2rem;opacity:0;animation:fadeUp 1s .9s ease forwards;
+        }
+        @keyframes shimmer{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+        .divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,#c8956c,transparent);margin:1rem auto;opacity:0;animation:fadeUp 1s 1.2s ease forwards;}
+        .hero-msg{
+            font-style:italic;font-size:1.15rem;max-width:620px;line-height:1.9;
+            color:#e0c8a8;opacity:0;animation:fadeUp 1s 1.5s ease forwards;margin-top:1rem;
+        }
+        .scroll-hint{position:absolute;bottom:2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeUp 1s 2s ease forwards;}
+        .scroll-hint span{font-size:.75rem;letter-spacing:4px;text-transform:uppercase;color:#8a6a50;}
+        .scroll-arrow{width:20px;height:20px;border-right:1px solid #8a6a50;border-bottom:1px solid #8a6a50;transform:rotate(45deg);animation:bounce 2s ease-in-out infinite;}
+        @keyframes bounce{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.5;}50%{transform:rotate(45deg) translate(5px,5px);opacity:1;}}
+
+        /* ===== SECTION ===== */
+        .section{padding:5rem 2rem;width:100%;max-width:1100px;margin:0 auto;}
+        .section-title{
+            font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,6vw,4rem);
+            text-align:center;background:linear-gradient(135deg,#d4a06a,#8B4513);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;margin-bottom:1rem;
+        }
+        .section-sub{color:#8a6a50;font-style:italic;text-align:center;margin-bottom:2.5rem;}
+
+        /* ===== MELTING CHOCOLATE ===== */
+        .melt-section{text-align:center;padding:5rem 2rem;}
+        .choco-wrapper{
+            position:relative;width:280px;height:360px;margin:2rem auto;cursor:pointer;
+            transition:transform .3s ease;
+        }
+        .choco-wrapper:hover{transform:scale(1.03);}
+
+        .choco-bar{position:relative;width:100%;height:100%;}
+
+        /* Wrapper / Foil */
+        .choco-foil{
+            position:absolute;top:0;left:0;width:100%;height:60%;
+            background:linear-gradient(145deg,#c8782a,#a05a1a,#d4903a);
+            border-radius:8px 8px 0 0;z-index:3;
+            transition:all 1.5s cubic-bezier(.34,1.56,.64,1);
+            transform-origin:top center;overflow:hidden;
+        }
+        .choco-foil::before{
+            content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+            background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.08) 50%,transparent 70%);
+        }
+        .foil-label{
+            position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+            font-family:'Great Vibes',cursive;font-size:1.8rem;color:rgba(255,240,210,.8);
+            text-shadow:0 2px 4px rgba(0,0,0,.3);white-space:nowrap;
+        }
+        .foil-stripe{
+            position:absolute;bottom:0;left:0;right:0;height:20px;
+            background:repeating-linear-gradient(90deg,#b87020,#b87020 10px,#a06018 10px,#a06018 20px);
+        }
+
+        /* Unwrapped state */
+        .choco-wrapper.unwrapped .choco-foil{
+            transform:rotateX(-160deg) translateY(-10px);opacity:.6;
+        }
+
+        /* Chocolate body */
+        .choco-body{
+            position:absolute;bottom:0;left:10px;right:10px;height:0;
+            background:linear-gradient(180deg,#5c3317,#3a1f0e,#4a2812);
+            border-radius:6px;transition:height 1.2s ease .5s;
+            box-shadow:inset 0 3px 8px rgba(0,0,0,.4),0 8px 25px rgba(0,0,0,.3);
+            overflow:hidden;
+        }
+        .choco-wrapper.unwrapped .choco-body{height:75%;}
+
+        /* Chocolate segments */
+        .choco-grid{
+            position:absolute;top:10px;left:8px;right:8px;bottom:10px;
+            display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr);
+            gap:3px;opacity:0;transition:opacity .8s ease 1.2s;
+        }
+        .choco-wrapper.unwrapped .choco-grid{opacity:1;}
+
+        .choco-piece{
+            background:linear-gradient(135deg,#6b3a1f,#5c3015,#7a4428);
+            border-radius:3px;position:relative;
+            box-shadow:inset 0 1px 2px rgba(255,255,255,.08),inset 0 -1px 2px rgba(0,0,0,.3);
+            transition:all .4s ease;
+        }
+        .choco-piece:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,.4);}
+        .choco-piece::after{
+            content:'';position:absolute;top:2px;left:2px;right:60%;bottom:60%;
+            background:rgba(255,255,255,.06);border-radius:2px;
+        }
+
+        /* Melting drips */
+        .melt-drip{
+            position:absolute;top:-5px;width:12px;background:#5c3317;
+            border-radius:0 0 8px 8px;height:0;
+            transition:height 1.5s cubic-bezier(.25,.46,.45,.94);
+        }
+        .choco-wrapper.unwrapped .melt-drip{height:var(--h);}
+        .drip-1{left:20%;transition-delay:1.5s;}
+        .drip-2{left:45%;transition-delay:1.8s;}
+        .drip-3{left:70%;transition-delay:2.1s;}
+
+        .drip-drop{
+            position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+            width:14px;height:14px;background:#5c3317;border-radius:50%;
+            opacity:0;transition:opacity .5s ease;
+        }
+        .choco-wrapper.unwrapped .drip-drop{opacity:1;transition-delay:calc(var(--dd) + 1s);}
+
+        /* Glow */
+        .choco-glow{
+            position:absolute;top:20%;left:50%;transform:translateX(-50%);
+            width:200px;height:200px;border-radius:50%;
+            background:radial-gradient(circle,rgba(200,140,60,.25),transparent 70%);
+            opacity:0;transition:opacity 1s ease 2s;pointer-events:none;
+        }
+        .choco-wrapper.unwrapped .choco-glow{opacity:1;animation:glowP 2s ease-in-out infinite 2.5s;}
+        @keyframes glowP{0%,100%{transform:translateX(-50%) scale(1);opacity:.8;}50%{transform:translateX(-50%) scale(1.1);opacity:1;}}
+
+        /* Steam/aroma */
+        .steam{
+            position:absolute;bottom:100%;left:50%;width:2px;
+            background:linear-gradient(to top,rgba(200,180,150,.2),transparent);
+            height:0;opacity:0;transition:all 1s ease 2.5s;
+            filter:blur(3px);
+        }
+        .choco-wrapper.unwrapped .steam{height:40px;opacity:1;animation:steamFloat 3s ease-in-out infinite 3s;}
+        .steam-1{left:35%;animation-delay:3.2s!important;}
+        .steam-2{left:50%;}
+        .steam-3{left:65%;animation-delay:3.5s!important;}
+        @keyframes steamFloat{
+            0%,100%{transform:translateY(0) scaleX(1);opacity:.3;}
+            50%{transform:translateY(-15px) scaleX(1.5);opacity:.6;}
+        }
+
+        .melt-label{
+            font-family:'Playfair Display',serif;font-size:.85rem;letter-spacing:4px;
+            text-transform:uppercase;color:#8a6a50;margin-top:1.5rem;
+        }
+        .melt-msg{
+            margin-top:1.5rem;font-family:'Great Vibes',cursive;font-size:2.2rem;
+            background:linear-gradient(135deg,#d4a06a,#8B4513);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            opacity:0;transform:translateY(20px);transition:all 1s ease 3s;
+        }
+        .choco-wrapper.unwrapped ~ .melt-msg{opacity:1;transform:translateY(0);}
+
+        /* ===== CHOCOLATE BOX ===== */
+        .box-section{text-align:center;padding:5rem 2rem;}
+        .choco-box-container{
+            position:relative;display:inline-block;margin:2rem auto;cursor:pointer;
+            perspective:800px;
+        }
+        .choco-box{position:relative;width:320px;height:240px;transform-style:preserve-3d;}
+
+        .box-bottom{
+            position:absolute;bottom:0;left:0;width:320px;height:150px;
+            background:linear-gradient(145deg,#8B2252,#6a1040);
+            border-radius:6px;border:2px solid rgba(200,100,120,.2);
+            box-shadow:0 10px 35px rgba(0,0,0,.4),inset 0 -5px 15px rgba(0,0,0,.2);
+        }
+        .box-ribbon-h{
+            position:absolute;top:50%;left:0;right:0;height:18px;transform:translateY(-50%);
+            background:linear-gradient(90deg,#d4a040,#f0c860,#d4a040);
+            box-shadow:0 0 10px rgba(212,160,64,.3);
+        }
+        .box-ribbon-v{
+            position:absolute;left:50%;top:0;bottom:0;width:18px;transform:translateX(-50%);
+            background:linear-gradient(180deg,#d4a040,#f0c860,#d4a040);
+            box-shadow:0 0 10px rgba(212,160,64,.3);
+        }
+
+        /* Chocolates inside */
+        .box-inside{
+            position:absolute;bottom:5px;left:5px;right:5px;top:5px;
+            background:linear-gradient(145deg,#4a1030,#3a0825);
+            display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);
+            gap:8px;padding:12px;border-radius:4px;
+            opacity:0;transition:opacity .8s ease 1s;
+        }
+        .choco-box-container.opened .box-inside{opacity:1;}
+
+        .box-choco{
+            border-radius:6px;position:relative;transition:all .4s ease;
+            box-shadow:inset 0 2px 4px rgba(255,255,255,.08),0 2px 6px rgba(0,0,0,.3);
+        }
+        .box-choco:nth-child(1){background:linear-gradient(135deg,#5c3317,#7a4428);border-radius:50%;}
+        .box-choco:nth-child(2){background:linear-gradient(135deg,#3a1f0e,#5c3015);border-radius:4px;}
+        .box-choco:nth-child(3){background:linear-gradient(135deg,#f5deb3,#d4a06a);border-radius:50%;} /* white choco */
+        .box-choco:nth-child(4){background:linear-gradient(135deg,#8B4513,#a0522d);border-radius:8px;}
+        .box-choco:nth-child(5){background:linear-gradient(135deg,#6b3a1f,#4a2812);border-radius:4px;transform:rotate(45deg);}
+        .box-choco:nth-child(6){background:linear-gradient(135deg,#d4956a,#c88050);border-radius:50%;} /* caramel */
+        .box-choco:nth-child(7){background:linear-gradient(135deg,#2a1508,#4a2510);border-radius:6px;} /* dark */
+        .box-choco:nth-child(8){background:linear-gradient(135deg,#c8782a,#a05a1a);border-radius:50% 50% 50% 0;}
+        .box-choco::after{
+            content:'';position:absolute;top:3px;left:3px;width:40%;height:30%;
+            background:rgba(255,255,255,.1);border-radius:50%;
+        }
+        .box-choco:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 6px 15px rgba(0,0,0,.4);}
+
+        /* Lid */
+        .box-lid{
+            position:absolute;top:90px;left:-2px;width:324px;height:100px;
+            background:linear-gradient(145deg,#9B2262,#7a1248);
+            border-radius:8px 8px 2px 2px;border:2px solid rgba(200,100,120,.2);
+            box-shadow:0 -4px 15px rgba(0,0,0,.15);
+            transform-origin:top center;transition:transform 1.2s cubic-bezier(.34,1.56,.64,1);
+            z-index:5;
+        }
+        .box-lid-ribbon-h{
+            position:absolute;bottom:30px;left:0;right:0;height:18px;
+            background:linear-gradient(90deg,#d4a040,#f0c860,#d4a040);
+        }
+        .box-lid-ribbon-v{
+            position:absolute;left:50%;top:0;bottom:0;width:18px;transform:translateX(-50%);
+            background:linear-gradient(180deg,#d4a040,#f0c860,#d4a040);
+        }
+        /* Bow */
+        .box-bow{
+            position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+            width:60px;height:35px;z-index:6;
+        }
+        .bow-loop{
+            position:absolute;top:8px;width:28px;height:22px;
+            border-radius:50%;border:3px solid #f0c860;background:rgba(212,160,64,.15);
+        }
+        .bow-loop-l{left:0;transform:rotate(-15deg);}
+        .bow-loop-r{right:0;transform:rotate(15deg);}
+        .bow-center{
+            position:absolute;top:12px;left:50%;transform:translateX(-50%);
+            width:12px;height:12px;background:#f0c860;border-radius:3px;
+        }
+
+        .choco-box-container.opened .box-lid{transform:rotateX(-140deg);}
+
+        .box-label{
+            font-family:'Playfair Display',serif;font-size:.85rem;letter-spacing:4px;
+            text-transform:uppercase;color:#8a6a50;margin-top:2rem;
+        }
+        .box-msg{
+            margin-top:1.5rem;font-family:'Great Vibes',cursive;font-size:2.2rem;
+            background:linear-gradient(135deg,#d4a06a,#c8782a);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            opacity:0;transform:translateY(20px);transition:all 1s ease 2s;
+        }
+        .choco-box-container.opened ~ .box-msg{opacity:1;transform:translateY(0);}
+
+        /* ===== SHARING SCENE ===== */
+        .scene-section{padding:5rem 2rem;text-align:center;overflow:hidden;}
+        .scene-stage{
+            position:relative;width:100%;max-width:850px;height:520px;
+            margin:2rem auto;border-radius:24px;overflow:hidden;
+            background:linear-gradient(180deg,#1a0e08 0%,#2a1508 50%,#1a1008 100%);
+            border:1px solid rgba(200,140,60,.1);cursor:pointer;
+        }
+
+        /* Cafe interior bg */
+        .cafe-wall{
+            position:absolute;top:0;left:0;right:0;bottom:130px;
+            background:linear-gradient(180deg,#2a1810,#22140c);
+        }
+        .cafe-window{
+            position:absolute;top:30px;left:50%;transform:translateX(-50%);
+            width:200px;height:120px;border:4px solid #3a2518;border-radius:8px 8px 0 0;
+            background:linear-gradient(180deg,#1a1830,#0a0815);
+            box-shadow:inset 0 0 20px rgba(100,150,255,.05);overflow:hidden;
+        }
+        .window-moon{
+            position:absolute;top:15px;right:20px;width:25px;height:25px;
+            border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff8e7,#f0e0b0);
+            box-shadow:0 0 15px rgba(255,248,200,.3);
+        }
+        .window-star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:.6;}
+
+        /* Table */
+        .cafe-table{
+            position:absolute;bottom:80px;left:50%;transform:translateX(-50%);
+            width:300px;height:12px;background:linear-gradient(90deg,#5a3820,#7a4830,#5a3820);
+            border-radius:6px;box-shadow:0 3px 10px rgba(0,0,0,.4);z-index:3;
+        }
+        .table-leg{
+            position:absolute;bottom:-50px;width:8px;height:50px;
+            background:linear-gradient(180deg,#5a3820,#3a2010);border-radius:0 0 3px 3px;
+        }
+        .table-leg-l{left:30px;}
+        .table-leg-r{right:30px;}
+
+        /* Items on table */
+        .table-items{
+            position:absolute;bottom:92px;left:50%;transform:translateX(-50%);
+            z-index:4;display:flex;gap:20px;align-items:flex-end;
+            opacity:0;transition:opacity 1s ease 2s;
+        }
+        .scene-stage.playing .table-items{opacity:1;}
+
+        .table-choco{font-size:1.8rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));}
+        .table-cup{
+            width:20px;height:22px;background:linear-gradient(180deg,#e8e0d0,#d4c8b0);
+            border-radius:0 0 4px 4px;position:relative;
+            box-shadow:0 2px 5px rgba(0,0,0,.3);
+        }
+        .table-cup::before{
+            content:'';position:absolute;top:2px;right:-8px;width:8px;height:12px;
+            border:2px solid #d4c8b0;border-left:none;border-radius:0 6px 6px 0;
+        }
+        .table-cup::after{
+            content:'';position:absolute;top:-4px;left:2px;right:2px;height:5px;
+            background:linear-gradient(180deg,#6b3a1f,#5c3015);border-radius:2px;
+        }
+        .cup-steam{
+            position:absolute;top:-18px;left:50%;width:2px;height:12px;
+            background:linear-gradient(to top,rgba(255,255,255,.15),transparent);
+            filter:blur(2px);animation:steamA 2.5s ease-in-out infinite;
+        }
+        @keyframes steamA{0%,100%{opacity:.2;transform:translateY(0) scaleX(1);}50%{opacity:.5;transform:translateY(-8px) scaleX(2);}}
+
+        .cafe-floor{
+            position:absolute;bottom:0;left:0;right:0;height:80px;
+            background:linear-gradient(180deg,#1a1008,#120a06);
+        }
+
+        /* Warm light */
+        .warm-light{
+            position:absolute;top:0;left:50%;transform:translateX(-50%);
+            width:300px;height:300px;
+            background:radial-gradient(ellipse at 50% 0%,rgba(200,140,60,.08),transparent 70%);
+            pointer-events:none;
+        }
+
+        /* Characters - BRIGHT FACES */
+        .char-him{
+            position:absolute;bottom:85px;left:-160px;width:150px;height:260px;
+            z-index:5;transition:left 2s cubic-bezier(.25,.46,.45,.94) .5s;
+        }
+        .scene-stage.playing .char-him{left:18%;}
+
+        .char-her{
+            position:absolute;bottom:85px;right:-160px;width:140px;height:260px;
+            z-index:5;transition:right 2s cubic-bezier(.25,.46,.45,.94) 1s;
+        }
+        .scene-stage.playing .char-her{right:18%;}
+
+        /* Chocolate being shared */
+        .shared-choco{
+            position:absolute;top:90px;right:-10px;font-size:1.6rem;
+            opacity:0;transition:all 1s ease 3.5s;
+            filter:drop-shadow(0 0 8px rgba(200,140,60,.5));z-index:6;
+        }
+        .scene-stage.sharing .shared-choco{
+            opacity:1;transform:translate(30px,0);
+        }
+
+        /* Her reaction */
+        .her-joy{
+            position:absolute;top:0;left:50%;transform:translateX(-50%);
+            font-size:1.8rem;opacity:0;transition:all .8s ease;z-index:6;
+        }
+        .scene-stage.reacted .her-joy{
+            opacity:1;transform:translateX(-50%) translateY(-25px);
+            animation:floatUD 2s ease-in-out infinite;
+        }
+        @keyframes floatUD{0%,100%{transform:translateX(-50%) translateY(-25px);}50%{transform:translateX(-50%) translateY(-35px);}}
+
+        /* Overlay text */
+        .scene-text{
+            position:absolute;font-family:'Great Vibes',cursive;z-index:10;
+            pointer-events:none;opacity:0;transition:opacity 1s ease;
+            filter:drop-shadow(0 0 20px rgba(200,140,60,.5));
+        }
+        .text-sweet{
+            top:20%;left:50%;transform:translateX(-50%);font-size:2.8rem;
+            background:linear-gradient(135deg,#d4a06a,#f5d5b0);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+        }
+        .scene-stage.sharing .text-sweet{opacity:1;animation:loveP 2s ease-in-out infinite;}
+        .text-together{
+            top:12%;left:50%;transform:translateX(-50%);font-size:3rem;
+            background:linear-gradient(135deg,#ffd700,#d4a06a,#c8782a);
+            background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;animation:shimmer 3s ease-in-out infinite;
+        }
+        .scene-stage.final .text-together{opacity:1;}
+        @keyframes loveP{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.05);}}
+
+        /* Scene play btn */
+        .scene-play{
+            position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+            width:85px;height:85px;border-radius:50%;
+            background:rgba(200,140,60,.15);border:2px solid rgba(200,140,60,.35);
+            display:flex;align-items:center;justify-content:center;
+            cursor:pointer;transition:all .4s ease;z-index:20;
+        }
+        .scene-play:hover{background:rgba(200,140,60,.3);transform:translate(-50%,-50%) scale(1.1);}
+        .scene-play svg{width:30px;height:30px;fill:#c8956c;margin-left:4px;}
+        .scene-stage.playing .scene-play{opacity:0;pointer-events:none;transition:opacity .5s ease;}
+
+        /* Hearts canvas */
+        .hearts-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:8;}
+
+        /* ===== CARDS ===== */
+        .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;}
+        .card{
+            background:linear-gradient(145deg,rgba(60,30,15,.6),rgba(25,12,8,.8));
+            backdrop-filter:blur(10px);border:1px solid rgba(200,140,60,.12);
+            border-radius:20px;padding:2.5rem 2rem;text-align:center;
+            transition:all .5s ease;opacity:0;transform:translateY(40px);
+            position:relative;overflow:hidden;
+        }
+        .card.visible{opacity:1;transform:translateY(0);}
+        .card:hover{transform:translateY(-8px);border-color:rgba(200,140,60,.3);box-shadow:0 20px 60px rgba(100,60,20,.15);}
+        .card::before{
+            content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+            background:linear-gradient(90deg,transparent,rgba(200,140,60,.04),transparent);
+            transition:left .7s ease;
+        }
+        .card:hover::before{left:100%;}
+        .card-icon{font-size:3rem;margin-bottom:1rem;}
+        .card-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:#d4a06a;margin-bottom:.8rem;font-weight:700;}
+        .card-text{font-style:italic;color:#b89878;line-height:1.8;font-size:.95rem;}
+
+        /* ===== TYPES ===== */
+        .types-list{max-width:800px;margin:0 auto;}
+        .type-row{
+            display:flex;align-items:center;gap:2rem;margin-bottom:2rem;
+            padding:1.5rem 2rem;background:linear-gradient(135deg,rgba(50,25,12,.5),rgba(20,10,6,.5));
+            border-radius:16px;border:1px solid rgba(200,140,60,.08);
+            transition:all .4s ease;opacity:0;transform:translateX(-30px);
+        }
+        .type-row.visible{opacity:1;transform:translateX(0);}
+        .type-row:nth-child(even){transform:translateX(30px);}
+        .type-row:nth-child(even).visible{transform:translateX(0);}
+        .type-row:hover{border-color:rgba(200,140,60,.25);box-shadow:0 8px 30px rgba(100,60,20,.1);}
+        .type-icon{font-size:2.2rem;flex-shrink:0;}
+        .type-info h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:#d4a06a;margin-bottom:.3rem;}
+        .type-info p{color:#9a7a58;font-style:italic;font-size:.9rem;line-height:1.6;}
+
+        /* ===== POEM ===== */
+        .poem-section{padding:5rem 2rem;text-align:center;}
+        .poem-card{
+            max-width:680px;margin:0 auto;padding:3rem;
+            background:linear-gradient(145deg,rgba(50,25,12,.4),rgba(15,8,4,.6));
+            border-radius:24px;border:1px solid rgba(200,140,60,.12);position:relative;
+        }
+        .poem-card::before,.poem-card::after{content:'"';font-family:'Great Vibes',cursive;font-size:6rem;color:rgba(200,140,60,.12);position:absolute;}
+        .poem-card::before{top:10px;left:20px;}
+        .poem-card::after{content:'"';bottom:-20px;right:20px;}
+        .poem-text{font-style:italic;font-size:1.05rem;line-height:2.2;color:#e0c8a8;}
+        .poem-text .line{display:block;opacity:0;animation:fadeUp .8s ease forwards;}
+        .poem-author{margin-top:1.5rem;font-family:'Playfair Display',serif;color:#a07050;font-size:.95rem;letter-spacing:3px;}
+
+        /* ===== FOOTER ===== */
+        .footer{text-align:center;padding:3rem 2rem;border-top:1px solid rgba(200,140,60,.08);margin-top:2rem;}
+        .footer-text{font-family:'Great Vibes',cursive;font-size:1.8rem;color:#a07050;margin-bottom:.5rem;}
+        .footer-sub{font-size:.8rem;color:#6a4a30;letter-spacing:4px;text-transform:uppercase;}
+        .heart-beat{display:inline-block;animation:hb 1.5s ease-in-out infinite;color:#c8782a;}
+        @keyframes hb{0%,100%{transform:scale(1);}15%{transform:scale(1.25);}30%{transform:scale(1);}45%{transform:scale(1.15);}60%{transform:scale(1);}}
+
+        /* ===== NAV ===== */
+        .week-nav{
+            position:fixed;top:0;left:0;right:0;z-index:50;
+            background:rgba(26,14,8,.88);backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(200,140,60,.08);
+            padding:.6rem 1rem;display:flex;justify-content:center;gap:.3rem;flex-wrap:wrap;
+        }
+        .week-nav a{
+            color:#8a6a50;text-decoration:none;font-size:.7rem;letter-spacing:2px;
+            text-transform:uppercase;padding:.4rem .8rem;border-radius:20px;
+            transition:all .3s ease;font-family:'Playfair Display',serif;
+        }
+        .week-nav a:hover{color:#d4a06a;background:rgba(200,140,60,.1);}
+        .week-nav a.active{color:#c8956c;background:rgba(200,140,60,.15);}
+
+        .burst{position:fixed;pointer-events:none;z-index:998;animation:burstA 1.5s ease-out forwards;}
+        @keyframes burstA{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0) rotate(var(--rot));}}
+
+        #confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100;}
+
+        @media(max-width:768px){
+            .type-row{flex-direction:column;text-align:center;gap:1rem;}
+            .scene-stage{height:430px;}
+            .scene-stage.playing .char-him{left:8%;}
+            .scene-stage.playing .char-her{right:5%;}
+            .text-sweet{font-size:2rem!important;}
+            .text-together{font-size:2.2rem!important;}
+            .cards-grid{grid-template-columns:1fr;}
+            .choco-box{transform:scale(.85);}
+            .cafe-window{width:140px;height:90px;}
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-loader" id="loader">
+    <div class="loader-icon">🍫</div>
+    <div class="loader-text">Melting sweetness...</div>
+</div>
+
+<canvas id="confettiCanvas"></canvas>
+
+<nav class="week-nav">
+    <a href="1.html">🌹 Rose</a>
+    <a href="2.html">💍 Propose</a>
+    <a href="3.html" class="active">🍫 Chocolate</a>
+    <a href="4.html">🧸 Teddy</a>
+    <a href="5.html">🤞 Promise</a>
+    <a href="6.html">🤗 Hug</a>
+    <a href="7.html">💋 Kiss</a>
+    <a href="8.html">❤️ Valentine</a>
+</nav>
+
+<div class="stars" id="stars"></div>
+<div class="particle-container" id="particles"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<div class="content">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-icon">🍫</div>
+        <p class="hero-sub">✦ 9th February 2026 ✦</p>
+        <h1 class="hero-title">Happy Chocolate Day</h1>
+        <p class="hero-date">Sweetness Shared is Love Doubled</p>
+        <div class="divider"></div>
+        <p class="hero-msg">
+            Love is the sweetest thing — and chocolate is how we taste it.
+            Today, let every bite whisper how deeply you care, how sweetly you love.
+        </p>
+        <div class="scroll-hint"><span>Explore</span><div class="scroll-arrow"></div></div>
+    </section>
+
+    <!-- ===== MELTING CHOCOLATE ===== -->
+    <section class="melt-section">
+        <h2 class="section-title">Unwrap the Sweetness</h2>
+        <p class="section-sub">Click to unwrap & watch it melt 🍫</p>
+
+        <div class="choco-wrapper" id="chocoBar" onclick="unwrapChoco(event)">
+            <div class="choco-glow"></div>
+            <div class="steam steam-1"></div>
+            <div class="steam steam-2"></div>
+            <div class="steam steam-3"></div>
+            <div class="choco-bar">
+                <!-- Foil wrapper -->
+                <div class="choco-foil">
+                    <div class="foil-label">Sweet Love</div>
+                    <div class="foil-stripe"></div>
+                </div>
+                <!-- Chocolate body -->
+                <div class="choco-body">
+                    <div class="melt-drip drip-1" style="--h:25px;"><div class="drip-drop" style="--dd:1.5s;"></div></div>
+                    <div class="melt-drip drip-2" style="--h:35px;"><div class="drip-drop" style="--dd:1.8s;"></div></div>
+                    <div class="melt-drip drip-3" style="--h:20px;"><div class="drip-drop" style="--dd:2.1s;"></div></div>
+                    <div class="choco-grid">
+                        <div class="choco-piece"></div><div class="choco-piece"></div><div class="choco-piece"></div>
+                        <div class="choco-piece"></div><div class="choco-piece"></div><div class="choco-piece"></div>
+                        <div class="choco-piece"></div><div class="choco-piece"></div><div class="choco-piece"></div>
+                        <div class="choco-piece"></div><div class="choco-piece"></div><div class="choco-piece"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="melt-label" id="meltLabel">✦ tap to unwrap ✦</p>
+        <div class="melt-msg" id="meltMsg">Life is sweeter when shared with you...</div>
+    </section>
+
+    <!-- ===== CHOCOLATE BOX ===== -->
+    <section class="box-section">
+        <h2 class="section-title">A Box of Love</h2>
+        <p class="section-sub">Open the box to discover the treats inside 🎁</p>
+
+        <div class="choco-box-container" id="chocoBoxC" onclick="openChocoBox(event)">
+            <div class="choco-box">
+                <div class="box-lid">
+                    <div class="box-lid-ribbon-h"></div>
+                    <div class="box-lid-ribbon-v"></div>
+                    <div class="box-bow">
+                        <div class="bow-loop bow-loop-l"></div>
+                        <div class="bow-loop bow-loop-r"></div>
+                        <div class="bow-center"></div>
+                    </div>
+                </div>
+                <div class="box-bottom">
+                    <div class="box-ribbon-h"></div>
+                    <div class="box-ribbon-v"></div>
+                    <div class="box-inside">
+                        <div class="box-choco"></div><div class="box-choco"></div>
+                        <div class="box-choco"></div><div class="box-choco"></div>
+                        <div class="box-choco"></div><div class="box-choco"></div>
+                        <div class="box-choco"></div><div class="box-choco"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="box-label" id="boxLabel">✦ tap the box ✦</p>
+        <div class="box-msg" id="boxMsg">Every piece holds a piece of my heart</div>
+    </section>
+
+    <!-- ===== SHARING SCENE ===== -->
+    <section class="scene-section">
+        <h2 class="section-title">Sweetest Moment</h2>
+        <p class="section-sub">Press play and watch them share 💕</p>
+
+        <div class="scene-stage" id="sceneStage">
+            <div class="scene-play" onclick="playScene()">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+
+            <div class="cafe-wall"></div>
+            <div class="warm-light"></div>
+
+            <!-- Window -->
+            <div class="cafe-window">
+                <div class="window-moon"></div>
+                <div class="window-star" style="top:10px;left:15px;"></div>
+                <div class="window-star" style="top:25px;left:45px;"></div>
+                <div class="window-star" style="top:8px;left:80px;"></div>
+                <div class="window-star" style="top:35px;left:120px;"></div>
+                <div class="window-star" style="top:18px;left:150px;"></div>
+            </div>
+
+            <!-- Table -->
+            <div class="cafe-table">
+                <div class="table-leg table-leg-l"></div>
+                <div class="table-leg table-leg-r"></div>
+            </div>
+            <div class="table-items">
+                <div class="table-cup"><div class="cup-steam"></div></div>
+                <div class="table-choco">🍫</div>
+                <div class="table-choco">🍬</div>
+                <div class="table-cup"><div class="cup-steam" style="animation-delay:.5s;"></div></div>
+            </div>
+
+            <div class="cafe-floor"></div>
+
+            <!-- HIM - bright face -->
+            <div class="char-him" id="sceneHim">
+                <svg viewBox="0 0 150 260" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Head -->
+                    <circle cx="75" cy="35" r="25" fill="#e8c4a0"/>
+                    <!-- Hair -->
+                    <path d="M50 28 Q52 10 75 7 Q98 10 100 28 Q97 20 88 17 Q68 14 56 20Z" fill="#2a1a10"/>
+                    <!-- Side hair -->
+                    <path d="M50 30 Q47 28 48 35" fill="#2a1a10"/>
+                    <path d="M100 30 Q103 28 102 35" fill="#2a1a10"/>
+                    <!-- Ears -->
+                    <ellipse cx="50" cy="36" rx="5" ry="7" fill="#ddb890"/>
+                    <ellipse cx="100" cy="36" rx="5" ry="7" fill="#ddb890"/>
+                    <!-- Eyebrows -->
+                    <path d="M62 26 Q67 23 72 26" stroke="#2a1a10" stroke-width="1.5" fill="none"/>
+                    <path d="M78 26 Q83 23 88 26" stroke="#2a1a10" stroke-width="1.5" fill="none"/>
+                    <!-- Eyes -->
+                    <ellipse cx="67" cy="32" rx="3" ry="3.5" fill="#fff"/>
+                    <ellipse cx="83" cy="32" rx="3" ry="3.5" fill="#fff"/>
+                    <circle cx="68" cy="32" r="2" fill="#3a2010"/>
+                    <circle cx="84" cy="32" r="2" fill="#3a2010"/>
+                    <circle cx="68.5" cy="31.5" r=".8" fill="#fff"/>
+                    <circle cx="84.5" cy="31.5" r=".8" fill="#fff"/>
+                    <!-- Nose -->
+                    <path d="M75 34 Q72 40 75 41 Q78 40 75 34" fill="#d4a880" opacity=".7"/>
+                    <!-- Warm smile -->
+                    <path d="M67 45 Q75 52 83 45" stroke="#a06040" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                    <!-- Teeth hint -->
+                    <path d="M70 46 Q75 50 80 46" fill="#fff" opacity=".5"/>
+                    <!-- Cheek blush -->
+                    <ellipse cx="60" cy="42" rx="5" ry="3" fill="#e8a088" opacity=".3"/>
+                    <ellipse cx="90" cy="42" rx="5" ry="3" fill="#e8a088" opacity=".3"/>
+                    <!-- Neck -->
+                    <rect x="68" y="58" width="14" height="12" fill="#e0b890" rx="3"/>
+                    <!-- Shirt collar -->
+                    <path d="M62 68 L75 78 L88 68" fill="#f0e8d8"/>
+                    <!-- Sweater -->
+                    <path d="M45 70 Q38 78 32 130 L32 180 Q32 185 38 185 L62 185 L62 145 L88 145 L88 185 L112 185 Q118 185 118 180 L118 130 Q112 78 105 70Z" fill="#5c3317"/>
+                    <!-- Sweater texture -->
+                    <path d="M45 90 Q75 85 105 90" stroke="#4a2810" stroke-width=".8" fill="none" opacity=".4"/>
+                    <path d="M42 110 Q75 105 108 110" stroke="#4a2810" stroke-width=".8" fill="none" opacity=".4"/>
+                    <path d="M38 130 Q75 125 112 130" stroke="#4a2810" stroke-width=".8" fill="none" opacity=".4"/>
+                    <!-- Left arm -->
+                    <path d="M45 75 Q28 95 30 125 Q28 135 35 132" fill="#5c3317"/>
+                    <circle cx="34" cy="130" r="8" fill="#e0b890"/>
+                    <!-- Fingers hint -->
+                    <path d="M28 128 Q26 132 28 134" stroke="#d4a880" stroke-width="1.5" fill="none"/>
+                    <path d="M31 126 Q29 131 31 133" stroke="#d4a880" stroke-width="1.5" fill="none"/>
+                    <!-- Right arm (will hold chocolate) -->
+                    <path d="M105 75 Q122 90 125 120 Q128 130 122 128" fill="#5c3317"/>
+                    <circle cx="124" cy="126" r="8" fill="#e0b890"/>
+                    <!-- Pants -->
+                    <rect x="55" y="180" width="17" height="55" rx="6" fill="#2a1a10"/>
+                    <rect x="78" y="180" width="17" height="55" rx="6" fill="#2a1a10"/>
+                    <!-- Shoes -->
+                    <ellipse cx="63" cy="237" rx="13" ry="5" fill="#1a0e06"/>
+                    <ellipse cx="87" cy="237" rx="13" ry="5" fill="#1a0e06"/>
+                </svg>
+                <div class="shared-choco">🍫</div>
+            </div>
+
+            <!-- HER - bright face -->
+            <div class="char-her" id="sceneHer">
+                <svg viewBox="0 0 140 270" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Hair (long flowing) -->
+                    <path d="M40 22 Q35 5 70 2 Q105 5 100 22 L103 60 Q106 80 98 95 L92 65 L70 55 L48 65 L42 95 Q34 80 37 60Z" fill="#1a0a06"/>
+                    <!-- Hair strands sides -->
+                    <path d="M40 32 Q32 45 34 70 Q30 85 33 95" stroke="#1a0a06" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <path d="M100 32 Q108 45 106 70 Q110 85 107 95" stroke="#1a0a06" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <!-- Head -->
+                    <circle cx="70" cy="32" r="24" fill="#f0d0b0"/>
+                    <!-- Hair front -->
+                    <path d="M46 26 Q48 12 70 9 Q92 12 94 26 Q90 20 82 18 Q58 15 50 20Z" fill="#1a0a06"/>
+                    <!-- Hair side wisps -->
+                    <path d="M46 28 Q43 32 44 38" stroke="#1a0a06" stroke-width="3" fill="none"/>
+                    <path d="M94 28 Q97 32 96 38" stroke="#1a0a06" stroke-width="3" fill="none"/>
+                    <!-- Ears -->
+                    <ellipse cx="46" cy="34" rx="4" ry="6" fill="#e8c4a0"/>
+                    <ellipse cx="94" cy="34" rx="4" ry="6" fill="#e8c4a0"/>
+                    <!-- Earrings -->
+                    <circle cx="46" cy="42" r="2.5" fill="#d4a040" opacity=".8"/>
+                    <circle cx="94" cy="42" r="2.5" fill="#d4a040" opacity=".8"/>
+                    <!-- Eyebrows -->
+                    <path d="M58 24 Q63 21 68 24" stroke="#2a1510" stroke-width="1.2" fill="none"/>
+                    <path d="M72 24 Q77 21 82 24" stroke="#2a1510" stroke-width="1.2" fill="none"/>
+                    <!-- Eyes (larger, more detail) -->
+                    <ellipse cx="63" cy="30" rx="4" ry="4" fill="#fff"/>
+                    <ellipse cx="77" cy="30" rx="4" ry="4" fill="#fff"/>
+                    <circle cx="64" cy="30" r="2.5" fill="#3a2515"/>
+                    <circle cx="78" cy="30" r="2.5" fill="#3a2515"/>
+                    <circle cx="64.5" cy="29.5" r="1" fill="#fff"/>
+                    <circle cx="78.5" cy="29.5" r="1" fill="#fff"/>
+                    <!-- Eyelashes -->
+                    <path d="M58 27 Q60 25 62 27" stroke="#1a0a06" stroke-width=".8" fill="none"/>
+                    <path d="M64 27 Q66 25 68 27" stroke="#1a0a06" stroke-width=".8" fill="none"/>
+                    <path d="M72 27 Q74 25 76 27" stroke="#1a0a06" stroke-width=".8" fill="none"/>
+                    <path d="M78 27 Q80 25 82 27" stroke="#1a0a06" stroke-width=".8" fill="none"/>
+                    <!-- Nose -->
+                    <path d="M70 32 Q67 37 70 38 Q73 37 70 32" fill="#e0b898" opacity=".6"/>
+                    <!-- Lips (fuller, colored) -->
+                    <path d="M63 42 Q67 40 70 42 Q73 40 77 42" stroke="#c45060" stroke-width="1" fill="none"/>
+                    <path d="M63 42 Q70 47 77 42" fill="#d45868" opacity=".6"/>
+                    <!-- Cheek blush -->
+                    <ellipse cx="55" cy="38" rx="6" ry="3.5" fill="#e8a090" opacity=".35"/>
+                    <ellipse cx="85" cy="38" rx="6" ry="3.5" fill="#e8a090" opacity=".35"/>
+                    <!-- Beauty mark -->
+                    <circle cx="80" cy="40" r="1" fill="#3a2010" opacity=".5"/>
+                    <!-- Neck -->
+                    <rect x="63" y="54" width="14" height="10" fill="#ecc8a8" rx="3"/>
+                    <!-- Necklace -->
+                    <path d="M56 60 Q70 68 84 60" stroke="#d4a040" stroke-width="1.2" fill="none" opacity=".7"/>
+                    <circle cx="70" cy="66" r="3" fill="#d4a040" opacity=".7"/>
+                    <!-- Dress -->
+                    <path d="M44 62 Q28 75 14 175 Q10 200 22 215 L48 225 L70 228 L92 225 L118 215 Q130 200 126 175 Q112 75 96 62Z" fill="#c8503a"/>
+                    <!-- Dress neckline -->
+                    <path d="M52 62 Q70 75 88 62" fill="#ecc8a8"/>
+                    <!-- Dress detail -->
+                    <path d="M52 70 Q48 120 38 185 Q55 190 70 188 Q72 120 65 70Z" fill="#d4604a" opacity=".25"/>
+                    <path d="M88 70 Q92 120 102 185 Q85 190 70 188 Q68 120 75 70Z" fill="#d4604a" opacity=".2"/>
+                    <!-- Belt/waist -->
+                    <path d="M36 110 Q70 105 104 110" stroke="#a03828" stroke-width="2" fill="none" opacity=".5"/>
+                    <circle cx="70" cy="108" r="3" fill="#d4a040" opacity=".5"/>
+                    <!-- Arms -->
+                    <path d="M44 68 Q26 85 25 115 Q22 125 28 122" fill="#ecc8a8"/>
+                    <circle cx="27" cy="120" r="7" fill="#ecc8a8"/>
+                    <path d="M96 68 Q114 85 115 115 Q118 125 112 122" fill="#ecc8a8"/>
+                    <circle cx="113" cy="120" r="7" fill="#ecc8a8"/>
+                    <!-- Fingers hint -->
+                    <path d="M21 118 Q19 122 21 125" stroke="#ddb898" stroke-width="1.5" fill="none"/>
+                    <path d="M24 117 Q22 121 24 124" stroke="#ddb898" stroke-width="1.5" fill="none"/>
+                    <path d="M107 118 Q109 122 107 125" stroke="#ddb898" stroke-width="1.5" fill="none"/>
+                    <path d="M110 117 Q112 121 110 124" stroke="#ddb898" stroke-width="1.5" fill="none"/>
+                    <!-- Shoes -->
+                    <ellipse cx="48" cy="228" rx="10" ry="4" fill="#8a2818"/>
+                    <ellipse cx="92" cy="228" rx="10" ry="4" fill="#8a2818"/>
+                </svg>
+                <div class="her-joy" id="herJoy">🥰✨</div>
+            </div>
+
+            <!-- Text -->
+            <div class="scene-text text-sweet" id="textSweet">Sweetness Shared Together...</div>
+            <div class="scene-text text-together" id="textTogether">You Make Life Sweeter 🍫</div>
+
+            <canvas class="hearts-canvas" id="heartsCanvas"></canvas>
+        </div>
+        <p class="section-sub" style="margin-top:1.5rem;">✦ a sweet love story ✦</p>
+    </section>
+
+    <!-- ===== WISHES ===== -->
+    <section class="section">
+        <h2 class="section-title">Sweet Wishes</h2>
+        <p class="section-sub">Heartfelt messages dipped in chocolate</p>
+        <div class="cards-grid">
+            <div class="card" data-delay="0">
+                <div class="card-icon">🍫</div>
+                <h3 class="card-title">For My Sweetheart</h3>
+                <p class="card-text">"You are the sweetest thing in my life — sweeter than the finest chocolate, richer than the deepest cocoa. Happy Chocolate Day, my love."</p>
+            </div>
+            <div class="card" data-delay="200">
+                <div class="card-icon">🤎</div>
+                <h3 class="card-title">For My Best Friend</h3>
+                <p class="card-text">"Like chocolate makes everything better, your friendship makes my life richer. Here's a sweet treat for the sweetest friend."</p>
+            </div>
+            <div class="card" data-delay="400">
+                <div class="card-icon">🎁</div>
+                <h3 class="card-title">For Someone Special</h3>
+                <p class="card-text">"Some people are like chocolate — they make the ordinary extraordinary. You are that person for me. Happy Chocolate Day!"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TYPES ===== -->
+    <section class="section">
+        <h2 class="section-title">Language of Chocolates</h2>
+        <div class="types-list">
+            <div class="type-row" data-delay="0"><span class="type-icon">🍫</span><div class="type-info"><h3>Milk Chocolate — Warm Affection</h3><p>"Smooth, sweet, and comforting — like the love that wraps around you on cold days."</p></div></div>
+            <div class="type-row" data-delay="150"><span class="type-icon">🖤</span><div class="type-info"><h3>Dark Chocolate — Deep Passion</h3><p>"Bold, intense, unforgettable — for a love that runs deeper than words can say."</p></div></div>
+            <div class="type-row" data-delay="300"><span class="type-icon">🤍</span><div class="type-info"><h3>White Chocolate — Pure Innocence</h3><p>"Gentle and pure — for the love that asks for nothing but gives everything."</p></div></div>
+            <div class="type-row" data-delay="450"><span class="type-icon">🍬</span><div class="type-info"><h3>Caramel Filled — Sweet Surprise</h3><p>"A delightful surprise at the center — like discovering something beautiful in someone you love."</p></div></div>
+            <div class="type-row" data-delay="600"><span class="type-icon">🫠</span><div class="type-info"><h3>Truffle — Luxury of Love</h3><p>"Rich, rare, and meant to be savored — like every precious moment spent with you."</p></div></div>
+            <div class="type-row" data-delay="750"><span class="type-icon">🍓</span><div class="type-info"><h3>Fruit & Chocolate — Playful Romance</h3><p>"A burst of flavor — like the fun, unexpected joy you bring to my life."</p></div></div>
+        </div>
+    </section>
+
+    <!-- ===== POEM ===== -->
+    <section class="poem-section">
+        <h2 class="section-title">A Sweet Poem</h2>
+        <div class="poem-card">
+            <div class="poem-text" id="poemText">
+                <span class="line">I wrapped my love in cocoa dreams,</span>
+                <span class="line">In golden foil and moonlit streams,</span>
+                <span class="line">A piece for every time you smiled,</span>
+                <span class="line">A square for every heart beguiled.</span>
+                <span class="line">&nbsp;</span>
+                <span class="line">So take this chocolate, taste the care,</span>
+                <span class="line">The sweetness only we can share,</span>
+                <span class="line">For in each bite, a truth is told —</span>
+                <span class="line">You're worth far more than melted gold.</span>
+            </div>
+            <p class="poem-author">— Sweet Nothings, on Chocolate Day 🍫</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p class="footer-text">Made with <span class="heart-beat">🤎</span> on Chocolate Day</p>
+        <p class="footer-sub">May your love be as sweet as chocolate 🍫</p>
+    </footer>
+</div>
+
+<script>
+    // Loader
+    window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('loader').classList.add('hidden'),1500);});
+
+    // Stars
+    function createStars(){
+        const c=document.getElementById('stars');
+        for(let i=0;i<100;i++){
+            const s=document.createElement('div');s.className='star';
+            s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+            s.style.setProperty('--dur',(2+Math.random()*4)+'s');
+            s.style.setProperty('--op',(0.2+Math.random()*0.5));
+            s.style.animationDelay=Math.random()*4+'s';
+            const sz=1+Math.random()*2;s.style.width=sz+'px';s.style.height=sz+'px';
+            c.appendChild(s);
+        }
+    }
+
+    // Floating items
+    function createFloat(){
+        const c=document.getElementById('particles');
+        const icons=['🍫','🤎','✨','🍬','🧁','🍩','☕','🎁'];
+        for(let i=0;i<14;i++){
+            const h=document.createElement('div');h.className='float-item';
+            h.textContent=icons[Math.floor(Math.random()*icons.length)];
+            h.style.left=Math.random()*100+'%';
+            h.style.setProperty('--sz',(.7+Math.random()*.8)+'rem');
+            h.style.setProperty('--dur',(12+Math.random()*15)+'s');
+            h.style.setProperty('--del',(Math.random()*12)+'s');
+            h.style.setProperty('--rot',(Math.random()*360)+'deg');
+            h.style.setProperty('--drift',(-60+Math.random()*120)+'px');
+            c.appendChild(h);
+        }
+    }
+
+    // Observers
+    function setupObs(){
+        const obs=new IntersectionObserver(en=>{
+            en.forEach(e=>{if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),parseInt(e.target.dataset.delay||0));});
+        },{threshold:.2});
+        document.querySelectorAll('.card,.type-row').forEach(el=>obs.observe(el));
+
+        const pObs=new IntersectionObserver(en=>{
+            en.forEach(e=>{if(e.isIntersecting) e.target.querySelectorAll('.line').forEach((l,i)=>{l.style.animationDelay=(i*.2)+'s';});});
+        },{threshold:.3});
+        const pt=document.getElementById('poemText');if(pt)pObs.observe(pt);
+    }
+
+    // Unwrap chocolate
+    let unwrapped=false;
+    function unwrapChoco(e){
+        const w=document.getElementById('chocoBar');
+        if(unwrapped){
+            w.classList.remove('unwrapped');
+            document.getElementById('meltLabel').textContent='✦ tap to unwrap ✦';
+            unwrapped=false;return;
+        }
+        unwrapped=true;
+        w.classList.add('unwrapped');
+        document.getElementById('meltLabel').textContent='✦ tap to wrap ✦';
+        setTimeout(()=>createBurst(e,['🍫','✨','🤎','🍬','🧁','💕'],16),1500);
+        setTimeout(()=>launchConfetti(),2500);
+    }
+
+    // Chocolate box
+    let boxOpened=false;
+    function openChocoBox(e){
+        const b=document.getElementById('chocoBoxC');
+        if(boxOpened){
+            b.classList.remove('opened');
+            document.getElementById('boxLabel').textContent='✦ tap the box ✦';
+            boxOpened=false;return;
+        }
+        boxOpened=true;
+        b.classList.add('opened');
+        document.getElementById('boxLabel').textContent='✦ tap to close ✦';
+        setTimeout(()=>createBurst(e,['🍫','🍬','🤎','💕','✨','🎁','🍩'],14),1200);
+        setTimeout(()=>launchConfetti(),1800);
+    }
+
+    // Scene
+    let scenePlaying=false;
+    function playScene(){
+        if(scenePlaying)return;
+        scenePlaying=true;
+        const s=document.getElementById('sceneStage');
+        s.classList.add('playing');
+
+        // sharing
+        setTimeout(()=>{s.classList.add('sharing');},3500);
+        // hearts
+        setTimeout(()=>startHearts(),4000);
+        // reaction
+        setTimeout(()=>{s.classList.add('reacted');},5000);
+        // final text
+        setTimeout(()=>{s.classList.add('final');launchConfetti();},6500);
+        // reset
+        setTimeout(()=>{
+            s.classList.remove('playing','sharing','reacted','final');
+            stopHearts();scenePlaying=false;
+        },14000);
+    }
+
+    // Hearts canvas
+    let hRAF=null,hArr=[];
+    function startHearts(){
+        const cv=document.getElementById('heartsCanvas'),ctx=cv.getContext('2d');
+        cv.width=cv.offsetWidth;cv.height=cv.offsetHeight;hArr=[];
+        function mk(){
+            return{x:cv.width*.25+Math.random()*cv.width*.5,y:cv.height*.5+Math.random()*50,
+                sz:6+Math.random()*12,sy:-.6-Math.random()*1.5,sx:-.6+Math.random()*1.2,
+                op:1,col:['#c8782a','#d4a06a','#a0522d','#f5d5b0','#8B4513'][Math.floor(Math.random()*5)],
+                r:Math.random()*Math.PI*2,rs:-.02+Math.random()*.04};
+        }
+        for(let i=0;i<20;i++){const h=mk();h.y=Math.random()*cv.height;h.op=Math.random();hArr.push(h);}
+        function dh(ctx,x,y,s,c,o,r){
+            ctx.save();ctx.translate(x,y);ctx.rotate(r);ctx.globalAlpha=o;ctx.fillStyle=c;
+            ctx.beginPath();const v=s/2;
+            ctx.moveTo(0,v*.4);ctx.bezierCurveTo(-v,-v*.5,-v*2,v*.3,0,v*1.8);
+            ctx.bezierCurveTo(v*2,v*.3,v,-v*.5,0,v*.4);ctx.fill();ctx.restore();
+        }
+        function anim(){
+            ctx.clearRect(0,0,cv.width,cv.height);
+            hArr.forEach((h,i)=>{
+                h.y+=h.sy;h.x+=h.sx;h.op-=.003;h.r+=h.rs;
+                if(h.op<=0||h.y<-20)hArr[i]=mk();
+                dh(ctx,h.x,h.y,h.sz,h.col,h.op,h.r);
+            });
+            hRAF=requestAnimationFrame(anim);
+        }
+        anim();
+    }
+    function stopHearts(){
+        if(hRAF)cancelAnimationFrame(hRAF);
+        const cv=document.getElementById('heartsCanvas'),ctx=cv.getContext('2d');
+        ctx.clearRect(0,0,cv.width,cv.height);
+    }
+
+    // Burst
+    function createBurst(e,emojis,count=12){
+        const cx=e.clientX||window.innerWidth/2,cy=e.clientY||window.innerHeight/2;
+        for(let i=0;i<count;i++){
+            const b=document.createElement('div');b.className='burst';
+            b.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+            b.style.left=cx+'px';b.style.top=cy+'px';
+            b.style.fontSize=(1+Math.random()*1.5)+'rem';
+            const a=(i/count)*Math.PI*2,d=60+Math.random()*120;
+            b.style.setProperty('--tx',Math.cos(a)*d+'px');
+            b.style.setProperty('--ty',Math.sin(a)*d+'px');
+            b.style.setProperty('--rot',(Math.random()*360)+'deg');
+            document.body.appendChild(b);setTimeout(()=>b.remove(),1500);
+        }
+    }
+
+    // Confetti
+    function launchConfetti(){
+        const cv=document.getElementById('confettiCanvas'),ctx=cv.getContext('2d');
+        cv.width=window.innerWidth;cv.height=window.innerHeight;
+        const cf=[];
+        const cols=['#c8782a','#d4a06a','#8B4513','#a0522d','#f5d5b0','#ffd700','#5c3317','#d4956a'];
+        for(let i=0;i<150;i++){
+            cf.push({x:cv.width/2+(Math.random()-.5)*300,y:cv.height/2+(Math.random()-.5)*100,
+                w:5+Math.random()*6,h:3+Math.random()*4,
+                color:cols[Math.floor(Math.random()*cols.length)],
+                vx:-8+Math.random()*16,vy:-14+Math.random()*-2,
+                g:.12+Math.random()*.1,rot:Math.random()*360,
+                rotS:-6+Math.random()*12,op:1,decay:.004+Math.random()*.004});
+        }
+        function anim(){
+            ctx.clearRect(0,0,cv.width,cv.height);let alive=false;
+            cf.forEach(c=>{
+                if(c.op<=0)return;alive=true;
+                c.x+=c.vx;c.vy+=c.g;c.y+=c.vy;c.vx*=.99;c.rot+=c.rotS;c.op-=c.decay;
+                ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.rot*Math.PI/180);
+                ctx.globalAlpha=Math.max(0,c.op);ctx.fillStyle=c.color;
+                ctx.fillRect(-c.w/2,-c.h/2,c.w,c.h);ctx.restore();
+            });
+            if(alive)requestAnimationFrame(anim);else ctx.clearRect(0,0,cv.width,cv.height);
+        }
+        anim();
+    }
+
+    // Click sparkle
+    document.addEventListener('click',e=>{
+        if(e.target.closest('.choco-wrapper')||e.target.closest('.choco-box-container')||e.target.closest('.scene-stage'))return;
+        const s=document.createElement('div');s.className='burst';s.textContent='✨';
+        s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';s.style.fontSize='1rem';
+        s.style.setProperty('--tx',(-20+Math.random()*40)+'px');
+        s.style.setProperty('--ty',(-50+Math.random()*20)+'px');
+        s.style.setProperty('--rot','0deg');
+        document.body.appendChild(s);setTimeout(()=>s.remove(),1500);
+    });
+
+    window.addEventListener('resize',()=>{const c=document.getElementById('confettiCanvas');c.width=window.innerWidth;c.height=window.innerHeight;});
+
+    createStars();createFloat();setupObs();
+</script>
+</body>
+</html>
